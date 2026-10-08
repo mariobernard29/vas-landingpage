@@ -23,15 +23,6 @@ const words = d.hero.title.split(' ');
       <div class="absolute inset-0 bg-black/55"></div>
 
       <div class="wrap relative py-24">
-        <div class="mb-8 flex flex-wrap items-center gap-x-6 gap-y-3" data-reveal>
-          <span class="inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-void/70 px-4 py-1.5">
-            <span class="relative flex h-2 w-2"><span class="ping-soft absolute inline-flex h-full w-full rounded-full bg-emerald-400"></span><span class="relative inline-flex h-2 w-2 rounded-full bg-emerald-400"></span></span>
-            <span class="font-display text-[10px] font-semibold uppercase tracking-[0.2em] text-platinum">{d.hero.status}</span>
-          </span>
-          <span class="font-display text-[10px] font-semibold uppercase tracking-[0.2em] text-steel">{d.hero.ribbon}</span>
-          <span class="font-mono text-[11px] tracking-widest text-steel"><span data-utc>--:--</span> UTC</span>
-        </div>
-
         <p class="eyebrow mb-5 flex items-center gap-4" data-reveal style="--d:80ms"><span class="draw"></span>{d.hero.eyebrow}</p>
         <h1 class="font-display max-w-4xl text-[36px] leading-[44px] font-bold uppercase tracking-[0.06em] text-white md:text-[56px] md:leading-[64px] md:tracking-[0.08em]" aria-label={d.hero.title}>
           {words.map((w, i) => <><span class="word"><span style={`--i:${i}`}>{w}</span></span>{' '}</>)}
@@ -282,11 +273,6 @@ const words = d.hero.title.split(' ');
   <Footer lang={lang} />
 
   <script>
-    // Reloj UTC
-    const utc = document.querySelector('[data-utc]');
-    const tick = () => { if (utc) utc.textContent = new Date().toISOString().slice(11, 16); };
-    tick(); setInterval(tick, 15000);
-
     // Formulario -> mailto
     const form = document.getElementById('contact-form') as HTMLFormElement | null;
     form?.addEventListener('submit', (e) => {
