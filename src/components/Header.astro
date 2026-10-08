@@ -1,76 +1,157 @@
 ---
 import Icon from './Icon';
 import { t, homePath, otherLang, type Lang } from '../i18n';
-const { lang, otherPath } = Astro.props as { lang: Lang; otherPath?: string };
+import { SITE } from '../config';
+const { lang, otherPath, solid = false } = Astro.props as { lang: Lang; otherPath?: string; solid?: boolean };
 const d = t(lang);
 const h = homePath(lang);
-const links = [
-  [h + '#services', d.nav.services],
-  [h + '#management', d.nav.management],
-  [h + '#fbo', d.nav.fbo],
-  [h + '#aog', d.nav.aog],
-  [h + '#network', d.nav.network],
-  [h + '#contact', d.nav.contact],
-];
 const other = otherLang(lang);
+const otherHref = otherPath ?? homePath(other);
+const links = [
+  [h + '#management', d.nav.management, 'management'],
+  [h + '#aog', d.nav.aog, 'aog'],
+  [h + '#destinations', d.nav.destinations, 'destinations'],
+  [h + '#about', d.nav.about, 'about'],
+];
 ---
-<header id="site-header" class="fixed inset-x-0 top-0 z-40 transition-all duration-700 ease-[cubic-bezier(.16,1,.3,1)]">
-  <div class="wrap flex h-20 items-center justify-between gap-6">
-    <a href={homePath(lang)} class="shrink-0" aria-label="Vanguard Aero Services">
-      <img src="/brand/logo-horizontal-white.png" alt="Vanguard Aero Services" width="549" height="120" class="h-9 w-auto md:h-10" />
+<a href="#main" class="sr-only z-[60] bg-white px-4 py-3 text-sm text-ink focus:not-sr-only focus:fixed focus:left-4 focus:top-4">{d.nav.skip}</a>
+
+<header id="site-header" class:list={['site-header fixed inset-x-0 top-0 z-50', solid && 'is-solid']} data-solid={solid ? 'always' : undefined}>
+  <div class="wrap flex h-16 items-center gap-8 lg:h-[72px] xl:gap-10">
+    <a href={h} class="shrink-0" aria-label="Vanguard Aero Services">
+      <img src="/brand/logo-horizontal-white.png" alt="Vanguard Aero Services" width="549" height="120" class="logo-light h-7 w-auto lg:h-8" />
+      <img src="/brand/logo-horizontal-dark.png" alt="" width="549" height="120" class="logo-dark h-7 w-auto lg:h-8" aria-hidden="true" />
     </a>
 
-    <nav class="hidden items-center gap-8 xl:flex" aria-label="Principal">
-      {links.map(([href, label]) => (
-        <a href={href} class="font-display text-[11px] font-semibold uppercase tracking-[0.18em] text-steel transition-colors hover:text-white">{label}</a>
-      ))}
+    <nav class="hidden h-full items-center gap-7 whitespace-nowrap text-[14px] lg:flex xl:gap-8" aria-label={lang === 'es' ? 'Principal' : 'Main'}>
+      <div class="relative flex h-full items-center" id="svc-wrap">
+        <button id="svc-btn" type="button" class="flex items-center gap-1.5 ulink" aria-expanded="false" aria-controls="svc-menu" data-sec="services">
+          {d.nav.services}<Icon name="down" size={14} className="transition-transform duration-300" />
+        </button>
+      </div>
+      {links.map(([href, label, sec]) => <a href={href} class="ulink" data-sec={sec}>{label}</a>)}
     </nav>
 
-    <div class="flex items-center gap-3">
-      <a href={otherPath ?? homePath(other)} hreflang={other} aria-label={d.nav.langLabel}
-        class="font-display rounded border border-white/15 px-3 py-2 text-[11px] font-semibold tracking-[0.2em] text-white transition-colors hover:border-white/50">{d.nav.lang}</a>
-      <a href={h + '#contact'} class="btn btn-primary hidden !py-2.5 md:inline-flex">{d.nav.cta}</a>
-      <button id="menu-btn" class="text-white xl:hidden" aria-label={d.nav.menu} aria-expanded="false" aria-controls="mobile-menu">
-        <Icon name="menu" size={26} />
+    <div class="ml-auto flex items-center gap-5">
+      <p class="hidden text-[13px] tracking-[0.04em] sm:block">
+        <span aria-current="true" class="font-semibold">{lang.toUpperCase()}</span>
+        <span class="dim mx-1">/</span>
+        <a href={otherHref} hreflang={other} aria-label={d.nav.langLabel} class="dim ulink hover:opacity-100">{other.toUpperCase()}</a>
+      </p>
+      <a href={h + '#contact'} class="btn hcta hidden !h-10 !px-5 !text-[13px] md:inline-flex lg:hidden xl:inline-flex">{d.nav.cta}</a>
+      <button id="menu-btn" type="button" class="-mr-2 p-2 lg:hidden" aria-label={d.nav.menu} data-open-label={d.nav.menu} data-close-label={d.nav.close} aria-expanded="false" aria-controls="mobile-menu">
+        <span class="i-open"><Icon name="menu" size={24} /></span>
+        <span class="i-close hidden"><Icon name="close" size={24} /></span>
       </button>
     </div>
   </div>
 
-  <div id="mobile-menu" class="hidden border-t border-white/10 bg-void xl:hidden">
-    <nav class="wrap flex flex-col py-4" aria-label="Mobile">
-      {links.map(([href, label]) => (
-        <a href={href} class="font-display border-b border-white/5 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-platinum">{label}</a>
+  <!-- Menú de servicios (desktop) -->
+  <div id="svc-menu" class="mega absolute inset-x-0 top-full hidden border-t border-stone bg-paper text-ink lg:block" role="region" aria-label={d.nav.services}>
+    <div class="wrap grid grid-cols-12 gap-10 py-10">
+      <div class="col-span-3 border-r border-stone pr-8">
+        <p class="kicker">{d.nav.services}</p>
+        <p class="mt-4 text-[15px] leading-6 text-steel">{d.services.text}</p>
+      </div>
+      <ul class="col-span-9 grid grid-cols-4 gap-8">
+        {d.nav.servicesMenu.map((s) => (
+          <li>
+            <a href={h + s.href} class="group block">
+              <span class="text-[12px] text-steel tabular-nums">{s.n}</span>
+              <span class="mt-2 flex items-center justify-between gap-2 border-b border-stone pb-3 text-[16px] font-medium">
+                {s.label}<Icon name="arrow" size={15} className="arr shrink-0 text-steel transition-transform duration-300 group-hover:translate-x-1 group-hover:text-ink" />
+              </span>
+              <span class="mt-3 block text-[14px] leading-[1.5] text-steel">{s.text}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+
+  <!-- Menú móvil -->
+  <div id="mobile-menu" class="fixed inset-x-0 top-16 bottom-0 hidden overflow-y-auto bg-paper text-ink lg:hidden">
+    <nav class="wrap flex min-h-full flex-col pb-8 pt-4" aria-label="Mobile">
+      <p class="kicker mt-4 mb-2">{d.nav.services}</p>
+      {d.nav.servicesMenu.map((s) => (
+        <a href={h + s.href} class="flex items-baseline gap-4 border-b border-stone py-4 text-[18px]">
+          <span class="w-6 text-[12px] text-steel tabular-nums">{s.n}</span>{s.label}
+        </a>
       ))}
-      <a href={h + '#contact'} class="btn btn-primary mt-5">{d.nav.cta}</a>
+      <a href={h + '#destinations'} class="flex items-baseline gap-4 border-b border-stone py-4 text-[18px]"><span class="w-6"></span>{d.nav.destinations}</a>
+      <a href={h + '#about'} class="flex items-baseline gap-4 border-b border-stone py-4 text-[18px]"><span class="w-6"></span>{d.nav.about}</a>
+      <a href={h + '#contact'} class="flex items-baseline gap-4 border-b border-stone py-4 text-[18px]"><span class="w-6"></span>{d.nav.contact}</a>
+
+      <div class="mt-auto pt-10">
+        <a href={h + '#contact'} class="btn btn-dark w-full">{d.nav.cta}<Icon name="arrow" className="arr" /></a>
+        <div class="mt-6 flex items-center justify-between text-[14px]">
+          <div>
+            <p class="kicker">{d.nav.menuContact}</p>
+            <a href={SITE.phoneHref} class="mt-1 block font-medium">{SITE.phone}</a>
+          </div>
+          <p class="text-[14px] tracking-[0.04em]">
+            <span class="font-semibold">{lang.toUpperCase()}</span><span class="mx-1 text-steel">/</span><a href={otherHref} hreflang={other} class="text-steel">{other.toUpperCase()}</a>
+          </p>
+        </div>
+      </div>
     </nav>
   </div>
 </header>
 
 <script>
   const header = document.getElementById('site-header')!;
-  const btn = document.getElementById('menu-btn')!;
+  const always = header.dataset.solid === 'always';
+  const menuBtn = document.getElementById('menu-btn')!;
   const menu = document.getElementById('mobile-menu')!;
-  let last = 0;
-  const onScroll = () => {
-    const y = window.scrollY;
-    const solid = y > 24;
-    header.classList.toggle('bg-void/95', solid);
-    header.classList.toggle('border-b', solid);
-    header.classList.toggle('border-white/10', solid);
-    // se oculta al bajar y reaparece al subir
-    const hide = y > 400 && y > last && menu.classList.contains('hidden');
-    header.style.transform = hide ? 'translateY(-100%)' : 'none';
-    last = y;
+  const svcBtn = document.getElementById('svc-btn')!;
+  const svcWrap = document.getElementById('svc-wrap')!;
+  const svcMenu = document.getElementById('svc-menu')!;
+  let menuOpen = false;
+  let svcOpen = false;
+
+  const sync = () => header.classList.toggle('is-solid', always || menuOpen || svcOpen || window.scrollY > 24);
+  sync();
+  window.addEventListener('scroll', sync, { passive: true });
+
+  // Menú móvil
+  const setMenu = (open: boolean) => {
+    menuOpen = open;
+    menu.classList.toggle('hidden', !open);
+    menuBtn.setAttribute('aria-expanded', String(open));
+    menuBtn.setAttribute('aria-label', (open ? menuBtn.dataset.closeLabel : menuBtn.dataset.openLabel) ?? '');
+    menuBtn.querySelector('.i-open')!.classList.toggle('hidden', open);
+    menuBtn.querySelector('.i-close')!.classList.toggle('hidden', !open);
+    document.documentElement.style.overflow = open ? 'hidden' : '';
+    sync();
   };
-  onScroll();
-  window.addEventListener('scroll', onScroll, { passive: true });
-  btn.addEventListener('click', () => {
-    const open = menu.classList.toggle('hidden') === false;
-    btn.setAttribute('aria-expanded', String(open));
-    header.classList.toggle('bg-void', open);
-  });
-  menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => {
-    menu.classList.add('hidden');
-    btn.setAttribute('aria-expanded', 'false');
-  }));
+  menuBtn.addEventListener('click', () => setMenu(!menuOpen));
+  menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
+
+  // Menú de servicios: hover con pequeña tolerancia, clic y teclado
+  let timer: number | undefined;
+  const setSvc = (open: boolean) => {
+    svcOpen = open;
+    svcMenu.classList.toggle('open', open);
+    svcBtn.setAttribute('aria-expanded', String(open));
+    svcBtn.querySelector('svg')?.classList.toggle('rotate-180', open);
+    sync();
+  };
+  const enter = () => { clearTimeout(timer); setSvc(true); };
+  const leave = () => { clearTimeout(timer); timer = window.setTimeout(() => setSvc(false), 160); };
+  [svcWrap, svcMenu].forEach((el) => { el.addEventListener('mouseenter', enter); el.addEventListener('mouseleave', leave); });
+  svcBtn.addEventListener('click', () => setSvc(!svcOpen));
+  svcMenu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setSvc(false)));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { if (svcOpen) { setSvc(false); svcBtn.focus(); } if (menuOpen) setMenu(false); } });
+  svcMenu.addEventListener('focusout', (e) => { if (!svcMenu.contains(e.relatedTarget as Node) && e.relatedTarget !== svcBtn) setSvc(false); });
+
+  // Sección activa en la navegación
+  const navLinks = [...header.querySelectorAll<HTMLElement>('[data-sec]')];
+  const sections = navLinks.map((l) => document.getElementById(l.dataset.sec!)).filter(Boolean) as HTMLElement[];
+  if (sections.length) {
+    const io = new IntersectionObserver((entries) => entries.forEach((e) => {
+      if (!e.isIntersecting) return;
+      navLinks.forEach((l) => l.setAttribute('aria-current', String(l.dataset.sec === e.target.id)));
+    }), { rootMargin: '-45% 0px -50% 0px' });
+    sections.forEach((s) => io.observe(s));
+  }
 </script>

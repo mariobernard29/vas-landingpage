@@ -12,46 +12,45 @@ const meta = legalMeta[lang];
 const other = otherLang(lang);
 const keys: LegalKey[] = ['privacy', 'terms', 'cookies'];
 // **negrita** simple
-const fmt = (s: string) => s.replace(/\*\*(.+?)\*\*/g, '<strong class="text-white font-semibold">$1</strong>');
+const fmt = (s: string) => s.replace(/\*\*(.+?)\*\*/g, '<strong class="font-semibold text-ink">$1</strong>');
 ---
 <Base lang={lang} title={`${page.title} | Vanguard Aero Services`} description={page.lead}
   path={legalSlugs[lang][k]} otherPath={legalSlugs[other][k]}>
-  <Header lang={lang} otherPath={legalSlugs[other][k]} />
-  <main class="bg-void pt-32 pb-24 md:pt-40" id="top">
-    <div class="wrap grid gap-12 lg:grid-cols-12">
+  <Header lang={lang} otherPath={legalSlugs[other][k]} solid />
+  <main id="main" class="bg-paper pt-32 pb-24 lg:pt-40 lg:pb-32">
+    <div class="wrap grid gap-12 lg:grid-cols-12 lg:gap-10">
       <aside class="lg:col-span-3">
-        <a href={homePath(lang)} class="font-display text-[11px] font-semibold uppercase tracking-[0.2em] text-steel transition-colors duration-500 hover:text-white">← {meta.back}</a>
-        <nav class="mt-10 hidden flex-col gap-1 lg:flex" aria-label="Legal">
+        <a href={homePath(lang)} class="ulink text-[13px] text-steel hover:text-ink">← {meta.back}</a>
+        <nav class="mt-10 hidden flex-col border-t border-stone lg:flex" aria-label="Legal">
           {keys.map((key) => (
             <a href={legalSlugs[lang][key]} aria-current={key === k ? 'page' : undefined}
-              class:list={['border-l py-2 pl-5 text-sm transition-colors duration-500', key === k ? 'border-white text-white' : 'border-white/10 text-steel hover:text-white']}>{legalLabels[lang][key]}</a>
+              class:list={['border-b border-stone py-3 text-[14px] transition-colors', key === k ? 'font-medium text-ink' : 'text-steel hover:text-ink']}>{legalLabels[lang][key]}</a>
           ))}
         </nav>
       </aside>
 
-      <article class="lg:col-span-8 lg:col-start-5">
-        <p class="eyebrow mb-4 flex items-center gap-4"><span class="draw in"></span>{meta.updated}: {meta.date}</p>
-        <h1 class="h2 !text-[32px] md:!text-[44px]">{page.title}</h1>
-        <p class="mt-6 text-lg text-on-muted">{page.lead}</p>
+      <article class="max-w-[720px] lg:col-span-8 lg:col-start-5">
+        <p class="kicker">{meta.updated}: {meta.date}</p>
+        <h1 class="h-section mt-4">{page.title}</h1>
+        <p class="lede mt-6">{page.lead}</p>
 
         <div class="mt-14 space-y-12">
           {page.sections.map((s) => (
             <section>
-              <h2 class="font-display text-base font-semibold uppercase tracking-[0.1em] text-white">{s.h}</h2>
-              <div class="hairline my-5"></div>
-              <div class="space-y-4 leading-7 text-on-muted">
+              <h2 class="border-b border-stone pb-4 text-[18px] font-medium">{s.h}</h2>
+              <div class="mt-5 space-y-4 text-[16px] leading-[1.7] text-steel">
                 {s.p.map((p) => <p set:html={fmt(p)} />)}
               </div>
             </section>
           ))}
         </div>
 
-        <div class="glass mt-16 p-6 text-sm text-steel">
+        <div class="mt-16 border-t border-ink/80 pt-6 text-[14px] text-steel">
           <p>{meta.draftNote}</p>
-          <p class="mt-2">{lang === 'es' ? 'Contacto' : 'Contact'}: <a class="text-white underline underline-offset-4" href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
+          <p class="mt-2">{lang === 'es' ? 'Contacto' : 'Contact'}: <a class="ulink text-ink" href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
         </div>
       </article>
     </div>
   </main>
-  <Footer lang={lang} />
+  <Footer lang={lang} otherPath={legalSlugs[other][k]} />
 </Base>

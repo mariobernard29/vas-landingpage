@@ -1,271 +1,364 @@
 ---
 import Base from '../layouts/Base.astro';
 import Header from './Header.astro';
-import Photo from './Photo.astro';
+import Footer from './Footer.astro';
+import Img from './Img.astro';
 import Icon from './Icon';
 import GlobeNetwork from './GlobeNetwork';
-import Footer from './Footer.astro';
 import { t, type Lang } from '../i18n';
 import { SITE } from '../config';
 
 const { lang } = Astro.props as { lang: Lang };
 const d = t(lang);
-const words = d.hero.title.split(' ');
+const pad = (n: number) => String(n).padStart(2, '0');
+const aogService = d.serviceTypes[6];
+const mgmtService = d.serviceTypes[0];
 ---
 <Base lang={lang}>
   <Header lang={lang} />
 
-  <main id="top">
+  <main id="main">
     <!-- HERO -->
-    <section class="relative flex min-h-[100svh] items-center overflow-hidden bg-void pt-20">
-      <img src="/images/hero.jpg" alt="" width="1672" height="941" fetchpriority="high"
-        class="hero-img absolute inset-0 h-full w-full object-cover object-right" onerror="this.remove()" />
-      <div class="absolute inset-0 bg-black/55"></div>
+    <section class="on-dark relative isolate flex h-[100svh] min-h-[600px] max-h-[980px] flex-col bg-ink text-white">
+      <Img name="hero" alt={d.hero.alt} priority sizes="100vw" class="absolute inset-0 -z-10 h-full w-full object-cover object-[62%_60%]" />
+      <div class="absolute inset-0 -z-10 bg-[#0b0d10]/40"></div>
+      <div class="absolute inset-x-0 bottom-0 -z-10 h-3/4 bg-gradient-to-t from-[#0b0d10]/85 via-[#0b0d10]/35 to-transparent"></div>
 
-      <div class="wrap relative py-24">
-        <p class="eyebrow mb-5 flex items-center gap-4" data-reveal style="--d:80ms"><span class="draw"></span>{d.hero.eyebrow}</p>
-        <h1 class="font-display max-w-4xl text-[36px] leading-[44px] font-bold uppercase tracking-[0.06em] text-white md:text-[56px] md:leading-[64px] md:tracking-[0.08em]" aria-label={d.hero.title}>
-          {words.map((w, i) => <><span class="word"><span style={`--i:${i}`}>{w}</span></span>{' '}</>)}
-        </h1>
-        <p class="mt-7 max-w-2xl text-base leading-[26px] text-on-muted md:text-[17px]" data-reveal style="--d:240ms">{d.hero.text}</p>
-        <div class="mt-10 flex flex-wrap gap-4" data-reveal style="--d:320ms">
-          <a href="#contact" class="btn btn-primary">{d.hero.cta1}<Icon name="arrow" size={16} /></a>
-          <a href="#aog" class="btn btn-outline"><Icon name="alert" size={16} className="text-crimson" />{d.hero.cta2}</a>
-        </div>
-
-        <dl class="mt-16 grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-white/10 bg-white/10 md:grid-cols-4" data-reveal style="--d:420ms">
-          {d.hero.facts.map((f) => (
-            <div class="bg-void/85 px-5 py-5 md:px-7">
-              <dt class="font-display text-xl font-semibold tracking-[0.06em] text-white md:text-2xl">{f.v}</dt>
-              <dd class="eyebrow mt-1.5 !text-[10px]">{f.l}</dd>
+      <div class="wrap flex flex-1 flex-col justify-end pt-28 pb-10 lg:pb-14 xl:pb-[136px]">
+        <p class="kicker !text-white/75">{d.hero.eyebrow}</p>
+        <div class="mt-5 grid gap-8 lg:grid-cols-12 lg:items-end lg:gap-10">
+          <h1 class="text-[38px] leading-[1.06] font-normal tracking-[-0.028em] text-balance sm:text-[48px] lg:col-span-7 lg:text-[58px] xl:text-[62px]">{d.hero.title}</h1>
+          <div class="lg:col-span-4 lg:col-start-9 lg:pb-2">
+            <p class="max-w-md text-[17px] leading-[1.55] text-white/85">{d.hero.text}</p>
+            <div class="mt-7 flex flex-wrap gap-3">
+              <a href="#contact" class="btn btn-light">{d.hero.cta1}<Icon name="arrow" className="arr" /></a>
+              <a href="#aog" class="btn btn-line">{d.hero.cta2}</a>
             </div>
-          ))}
-        </dl>
+          </div>
+        </div>
+        <ul class="mt-12 flex flex-wrap gap-x-8 gap-y-2 border-t border-white/20 pt-5 text-[11px] font-medium uppercase tracking-[0.16em] text-white/70 lg:mt-14">
+          {d.hero.meta.map((m) => <li>{m}</li>)}
+        </ul>
       </div>
     </section>
 
-    <!-- SERVICES -->
-    <section id="services" class="relative bg-void py-24 md:py-32">
+    <!-- SOLICITUD RÁPIDA -->
+    <section aria-labelledby="quick-title" class="relative z-10 xl:-mt-[104px]">
       <div class="wrap">
-        <div class="mb-14 max-w-3xl" data-reveal>
-          <p class="eyebrow mb-4 flex items-center gap-4"><span class="draw"></span>{d.services.eyebrow}</p>
-          <h2 class="h2">{d.services.title}</h2>
-          <p class="mt-5 max-w-2xl text-on-muted">{d.services.text}</p>
-        </div>
-        <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-          {d.services.items.map((s, i) => (
-            <a href={s.href} class="glass group flex flex-col gap-6 p-7" data-reveal style={`--d:${i * 90}ms`}>
-              <div class="flex items-center justify-between">
-                <span class="flex h-12 w-12 items-center justify-center rounded border border-white/10 bg-navy-2/60 text-white transition-all duration-300 group-hover:bg-white group-hover:text-void"><Icon name={s.icon} size={24} /></span>
-                <span class="eyebrow !text-[10px]">{s.tag}</span>
+        <form id="quick" class="grid gap-4 border-b border-stone bg-paper py-8 sm:grid-cols-2 lg:grid-cols-4 lg:items-end lg:gap-5 xl:grid-cols-[1.05fr_1fr_1fr_0.9fr_auto] xl:border-b-0 xl:px-8 xl:pt-7 xl:pb-8">
+          <div class="sm:col-span-2 lg:col-span-4 xl:col-span-1 xl:self-center xl:pr-2">
+            <p id="quick-title" class="text-[17px] font-medium">{d.request.title}</p>
+            <p class="mt-1 flex items-center gap-2 text-[13px] text-steel"><span class="h-1.5 w-1.5 rounded-full bg-ok"></span>{d.request.note}</p>
+          </div>
+          <div>
+            <label class="f-label" for="q-airport">{d.request.airport}</label>
+            <select class="field" id="q-airport" name="airport">{d.airports.map((a) => <option value={a.v}>{a.l}</option>)}</select>
+          </div>
+          <div>
+            <label class="f-label" for="q-service">{d.request.service}</label>
+            <select class="field" id="q-service" name="service">{d.serviceTypes.map((s) => <option>{s}</option>)}</select>
+          </div>
+          <div>
+            <label class="f-label" for="q-date">{d.request.date}</label>
+            <input class="field" id="q-date" name="date" type="date" />
+          </div>
+          <button type="submit" class="btn btn-dark sm:col-span-2 lg:col-span-1">{d.request.submit}<Icon name="arrow" className="arr" /></button>
+        </form>
+      </div>
+    </section>
+
+    <!-- SERVICIOS -->
+    <section id="services" class="bg-paper pt-20 pb-24 lg:pt-28 lg:pb-36">
+      <div class="wrap">
+        <header class="grid gap-6 lg:grid-cols-12 lg:gap-10" data-reveal>
+          <div class="lg:col-span-6">
+            <p class="kicker">{d.services.eyebrow}</p>
+            <h2 class="h-section mt-4">{d.services.title}</h2>
+          </div>
+          <p class="lede lg:col-span-4 lg:col-start-9 lg:self-end">{d.services.text}</p>
+        </header>
+
+        <article id="management" class="mt-14 grid gap-8 lg:mt-20 lg:grid-cols-12 lg:gap-10">
+          <div class="zoom aspect-[4/3] bg-ink-2 lg:col-span-7 lg:aspect-auto lg:h-[660px]">
+            <Img name="svc-management" alt={d.services.main.alt} sizes="(min-width:1024px) 58vw, 100vw" class="h-full w-full object-cover object-[50%_62%]" />
+          </div>
+          <div class="flex flex-col lg:col-span-4 lg:col-start-9 lg:pt-2" data-reveal>
+            <p class="flex items-center gap-3 text-[12px] text-steel"><span class="tabular-nums">{d.services.main.n}</span><span class="h-px w-6 bg-stone"></span><span class="uppercase tracking-[0.14em]">{d.services.main.tag}</span></p>
+            <h3 class="mt-5 text-[26px] leading-[1.2] font-normal tracking-[-0.015em] lg:text-[30px]">{d.services.main.title}</h3>
+            <p class="mt-4 text-[16px] text-steel">{d.services.main.text}</p>
+            <ul class="mt-8 border-t border-stone">
+              {d.services.main.items.map((it) => (
+                <li class="border-b border-stone py-4">
+                  <p class="text-[15px] font-medium">{it.t}</p>
+                  <p class="mt-1 text-[14px] leading-[1.5] text-steel">{it.d}</p>
+                </li>
+              ))}
+            </ul>
+            <a href="#contact" data-prefill-service={mgmtService} class="more mt-8 self-start"><span class="ulink">{d.services.main.link}</span><Icon name="arrow" className="arr" /></a>
+          </div>
+        </article>
+
+        <div class="mt-16 grid gap-8 sm:gap-12 lg:mt-28 lg:grid-cols-12 lg:gap-10">
+          {d.services.others.map((s, i) => (
+            <a href={s.href} class:list={[
+              'group grid grid-cols-[112px_1fr] items-start gap-5 sm:block',
+              i === 0 && 'lg:col-span-5',
+              i === 1 && 'lg:col-span-3 lg:col-start-7 lg:mt-24',
+              i === 2 && 'lg:col-span-3 lg:col-start-10 lg:mt-8',
+            ]}>
+              <div class:list={['zoom aspect-square bg-ink-2', i === 0 && 'sm:aspect-[3/2]', i === 1 && 'sm:aspect-[3/2] lg:aspect-[4/5]', i === 2 && 'sm:aspect-[3/2] lg:aspect-square']}>
+                <Img name={s.img} alt={s.alt} sizes="(min-width:1024px) 40vw, (min-width:640px) 100vw, 112px" class:list={['h-full w-full object-cover', i === 1 && 'object-[70%_60%]', i === 2 && 'object-[90%_100%]']} />
               </div>
-              <div class="flex-1">
-                <h3 class="font-display text-lg font-semibold uppercase tracking-[0.04em]">{s.title}</h3>
-                <p class="mt-3 text-sm leading-[22px] text-on-muted">{s.text}</p>
+              <div class="sm:mt-5">
+                <p class="text-[12px] text-steel tabular-nums">{s.n}</p>
+                <h3 class="mt-1 text-[19px] leading-snug font-normal sm:text-[21px]">{s.title}</h3>
+                <p class="mt-2 text-[15px] leading-[1.5] text-steel">{s.text}</p>
+                <span class="more mt-4 hidden sm:inline-flex">{s.link}<Icon name="arrow" className="arr" /></span>
               </div>
-              <span class="inline-flex items-center gap-2 text-steel transition-colors group-hover:text-white"><Icon name="arrow" size={18} className="transition-transform duration-300 group-hover:translate-x-1.5" /></span>
             </a>
           ))}
         </div>
       </div>
     </section>
 
-    <!-- MANAGEMENT -->
-    <section id="management" class="bg-[#08080a] py-24 md:py-32">
-      <div class="wrap grid items-center gap-14 lg:grid-cols-12 lg:gap-20">
-        <div class="lg:col-span-6" data-reveal>
-          <p class="eyebrow mb-4 flex items-center gap-4"><span class="draw"></span>{d.management.eyebrow}</p>
-          <h2 class="h2">{d.management.title}</h2>
-          <p class="mt-5 text-on-muted">{d.management.text}</p>
-          <ul class="mt-10 space-y-3">
-            {d.management.items.map((it) => (
-              <li class="glass flex gap-5 p-5">
-                <span class="mt-0.5 text-platinum"><Icon name={it.icon} size={24} /></span>
-                <div>
-                  <h3 class="font-display text-sm font-semibold uppercase tracking-[0.1em]">{it.title}</h3>
-                  <p class="mt-1.5 text-sm leading-[22px] text-on-muted">{it.text}</p>
-                </div>
+    <!-- UN SOLO SOCIO -->
+    <section id="fbo" class="bg-white lg:grid lg:grid-cols-2">
+      <div id="swap" class="swap relative h-[78vw] max-h-[560px] bg-ink-2 sm:h-[520px] lg:h-auto lg:max-h-none lg:min-h-[780px]">
+        <Img name="management" alt={d.partner.defaultAlt} sizes="(min-width:1024px) 50vw, 100vw" class="on absolute inset-0 h-full w-full object-cover object-[45%_55%]" data-k="default" />
+        {d.partner.items.map((it, i) => (
+          <Img name={it.img} alt={it.alt} sizes="(min-width:1024px) 50vw, 100vw" class="absolute inset-0 h-full w-full object-cover" data-k={i} />
+        ))}
+        <div class="absolute bottom-0 left-0 max-w-[440px] bg-white px-5 pt-4 pb-4 pr-8 sm:px-6 lg:px-8 lg:pt-5 lg:pb-6" aria-live="polite">
+          <p id="cap-n" class="text-[12px] text-steel tabular-nums">CCS · PMV</p>
+          <p id="cap-t" class="mt-1 text-[16px] font-medium">{d.partner.defaultCaption}</p>
+          <p id="cap-d" class="mt-2 hidden text-[14px] leading-[1.5] text-steel lg:block"></p>
+        </div>
+      </div>
+
+      <div class="flex items-center px-4 py-16 sm:px-6 lg:px-16 lg:py-24 xl:px-24">
+        <div class="w-full max-w-[540px]">
+          <p class="kicker">{d.partner.eyebrow}</p>
+          <h2 class="h-section mt-4">{d.partner.title}</h2>
+          <p class="mt-8 text-[18px] font-medium">{d.partner.lead}</p>
+          <p class="mt-2 text-[16px] text-steel">{d.partner.text}</p>
+          <ul id="ops-list" class="mt-8 border-t border-stone">
+            {d.partner.items.map((it, i) => (
+              <li class="border-b border-stone">
+                <button type="button" class="ops-item group flex w-full items-center justify-between gap-4 py-[15px] text-left" data-i={i} data-t={it.t} data-d={it.d} aria-pressed="false" aria-controls="swap">
+                  <span class="flex items-baseline gap-4">
+                    <span class="w-6 text-[12px] text-steel tabular-nums transition-colors group-aria-pressed:text-accent">{pad(i + 1)}</span>
+                    <span class="text-[17px] transition-colors group-hover:text-accent group-aria-pressed:text-accent">{it.t}</span>
+                  </span>
+                  <Icon name="arrow" size={15} className="shrink-0 -translate-x-1 text-accent opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100 group-aria-pressed:translate-x-0 group-aria-pressed:opacity-100" />
+                </button>
+                <p class="ops-desc hidden pb-4 pl-10 text-[14px] leading-[1.5] text-steel lg:!hidden">{it.d}</p>
               </li>
             ))}
           </ul>
-        </div>
-        <div class="relative lg:col-span-6" data-reveal style="--d:150ms">
-          <Photo src="/images/management.jpg" alt={d.management.photoAlt} width={1371} height={1600} class="rounded-lg" />
-          <span class="font-display absolute bottom-5 left-5 rounded-full border border-white/20 bg-void/80 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-white">{d.management.badge}</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- FBO -->
-    <section id="fbo" class="bg-void py-24 md:py-32">
-      <div class="wrap">
-        <div class="mb-14 grid gap-8 lg:grid-cols-12 lg:items-end" data-reveal>
-          <div class="lg:col-span-7">
-            <p class="eyebrow mb-4 flex items-center gap-4"><span class="draw"></span>{d.fbo.eyebrow}</p>
-            <h2 class="h2">{d.fbo.title}</h2>
-          </div>
-          <p class="text-on-muted lg:col-span-5">{d.fbo.text}</p>
-        </div>
-
-        <div class="grid gap-4 lg:grid-cols-12">
-          <div class="grid gap-4 sm:grid-cols-2 lg:col-span-8">
-            {d.fbo.items.map((it, i) => (
-              <div class="glass group flex flex-col gap-4 p-6" data-reveal style={`--d:${(i % 2) * 90}ms`}>
-                <span class="flex h-11 w-11 items-center justify-center rounded border border-white/10 bg-navy-2/60 text-white transition-all duration-300 group-hover:bg-white group-hover:text-void"><Icon name={it.icon} size={22} /></span>
-                <h3 class="font-display text-base font-semibold uppercase tracking-[0.05em]">{it.title}</h3>
-                <p class="text-sm leading-[22px] text-on-muted">{it.text}</p>
-              </div>
-            ))}
-          </div>
-          <div class="flex flex-col gap-4 lg:col-span-4" data-reveal style="--d:120ms">
-            <Photo src="/images/fbo.jpg" alt={d.fbo.photoAlt} width={1086} height={1448} class="min-h-[320px] flex-1 rounded-lg [&>img]:h-full" />
-            <p class="glass flex items-center justify-between gap-4 px-6 py-5 font-display text-xs font-semibold uppercase leading-5 tracking-[0.12em] text-platinum">
-              {d.fbo.more}
-              <Icon name="concierge" size={22} className="shrink-0 text-steel" />
-            </p>
-          </div>
+          <p class="mt-6 text-[14px] text-steel">{d.partner.note}</p>
         </div>
       </div>
     </section>
 
     <!-- AOG -->
-    <section id="aog" class="relative overflow-hidden bg-[#08080a] py-24 md:py-32">
-      <img src="/images/aog.jpg" alt="" width="1832" height="858" loading="lazy" class="absolute inset-0 h-full w-full object-cover opacity-60" onerror="this.remove()" />
-      <div class="absolute inset-0 bg-[#08080a]/75"></div>
-      <div class="wrap relative">
-        <div class="grid gap-12 lg:grid-cols-12 lg:items-center">
-          <div class="lg:col-span-7" data-reveal>
-            <p class="eyebrow mb-4 flex items-center gap-3 !text-crimson"><span class="h-2 w-2 animate-pulse rounded-full bg-crimson"></span>{d.aog.eyebrow}</p>
-            <h2 class="h2">{d.aog.title}</h2>
-            <p class="mt-5 max-w-2xl text-on-muted">{d.aog.text}</p>
-            <div class="mt-9 flex flex-wrap gap-4">
-              <a href="#contact" class="btn btn-primary">{d.aog.cta}<Icon name="arrow" size={16} /></a>
-              <a href={SITE.phoneHref} class="btn btn-outline"><Icon name="phone" size={16} />{SITE.phone}</a>
+    <section id="aog" class="on-dark relative isolate overflow-hidden bg-night text-white">
+      <div class="relative flex min-h-[600px] items-end lg:min-h-[660px]">
+        <Img name="aog" alt={d.aog.alt} sizes="100vw" class="absolute inset-0 -z-10 h-full w-full object-cover object-[72%_50%]" />
+        <div class="absolute inset-0 -z-10 bg-night/45"></div>
+        <div class="absolute inset-0 -z-10 bg-gradient-to-r from-night/90 via-night/50 to-transparent max-lg:bg-gradient-to-t"></div>
+        <div class="wrap pt-28 pb-14 lg:pb-20">
+          <div class="max-w-[620px]" data-reveal>
+            <p class="flex items-center gap-3 text-[12px] font-medium uppercase tracking-[0.16em] text-white/80"><span class="h-1.5 w-1.5 rounded-full bg-ok"></span>{d.aog.status}</p>
+            <p class="mt-10 text-[13px] font-medium tracking-[0.14em] text-accent-soft">AOG 24/7</p>
+            <h2 class="mt-3 text-[38px] leading-[1.05] font-normal tracking-[-0.026em] text-balance lg:text-[56px]">{d.aog.title}</h2>
+            <p class="mt-6 max-w-[540px] text-[16px] leading-[1.6] text-white/80 lg:text-[17px]">{d.aog.text}</p>
+            <div class="mt-9 flex flex-wrap gap-3">
+              <a href="#contact" data-prefill-service={aogService} class="btn btn-light">{d.aog.cta}<Icon name="arrow" className="arr" /></a>
+              <a href={SITE.phoneHref} class="btn btn-line"><span class="text-white/70">{d.aog.phoneLabel}</span>{SITE.phone}</a>
             </div>
           </div>
-          <ol class="grid gap-3 lg:col-span-5" data-reveal style="--d:150ms">
-            {d.aog.steps.map((s) => (
-              <li class="glass flex items-center gap-5 px-6 py-5">
-                <span class="font-display text-2xl font-semibold tracking-[0.06em] text-slate">{s.n}</span>
+        </div>
+      </div>
+
+      <div class="wrap border-t border-white/10 pt-14 pb-20 lg:pt-16 lg:pb-28">
+        <ol class="grid lg:grid-cols-4">
+          {d.aog.steps.map((s, i) => (
+            <li class="relative pb-10 pl-10 last:pb-0 lg:pb-0 lg:pl-0 lg:pr-10">
+              <span class:list={['absolute left-[5px] top-3 bottom-0 w-px bg-white/20 lg:left-0 lg:right-0 lg:top-[5px] lg:bottom-auto lg:h-px lg:w-auto', i === 3 && 'max-lg:hidden lg:right-auto lg:w-0']}></span>
+              <span class:list={['absolute left-0 top-1 h-[11px] w-[11px] border border-white lg:static lg:block', i === 0 ? 'bg-white' : 'bg-night']}></span>
+              <p class="text-[12px] text-mist tabular-nums lg:mt-6">{s.n}</p>
+              <h3 class="mt-2 text-[20px] font-normal">{s.t}</h3>
+              <p class="mt-2 max-w-[280px] text-[14px] leading-[1.55] text-mist">{s.d}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <!-- PERMISOS -->
+    <section id="permits" class="bg-paper py-20 lg:py-32">
+      <div class="wrap grid gap-12 lg:grid-cols-12 lg:gap-10">
+        <figure class="lg:col-span-5">
+          <div class="zoom aspect-[4/3] bg-ink-2 lg:aspect-[4/5]">
+            <Img name="permits" alt={d.permits.alt} sizes="(min-width:1024px) 40vw, 100vw" class="h-full w-full object-cover object-[85%_100%]" />
+          </div>
+          <figcaption class="mt-3 text-[12px] text-steel">{d.permits.caption}</figcaption>
+        </figure>
+        <div class="lg:col-span-6 lg:col-start-7 lg:pt-4">
+          <div data-reveal>
+            <p class="kicker">{d.permits.eyebrow}</p>
+            <h2 class="h-section mt-4">{d.permits.title}</h2>
+            <p class="lede mt-6">{d.permits.text}</p>
+          </div>
+          <div class="mt-10 border-t border-ink/80">
+            {d.permits.items.map((p, i) => (
+              <details class="border-b border-stone" open={i === 0}>
+                <summary class="flex items-center gap-4 py-5 sm:gap-6">
+                  <span class="w-[84px] shrink-0 text-[15px] font-semibold tracking-[0.06em] sm:w-28">{p.auth}</span>
+                  <span class="flex-1 text-[15px] leading-snug text-steel">{p.name}</span>
+                  <span class="plus shrink-0 text-steel"><Icon name="plus" size={18} /></span>
+                </summary>
+                <p class="pb-6 text-[15px] leading-[1.6] sm:pl-[136px]">{p.d}</p>
+              </details>
+            ))}
+          </div>
+          <p class="mt-6 text-[13px] leading-[1.6] text-steel">{d.permits.note}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- DESTINOS -->
+    <section id="destinations" class="bg-white py-20 lg:py-32">
+      <div class="wrap">
+        <header class="grid gap-6 lg:grid-cols-12 lg:gap-10" data-reveal>
+          <div class="lg:col-span-6">
+            <p class="kicker">{d.destinations.eyebrow}</p>
+            <h2 class="h-section mt-4">{d.destinations.title}</h2>
+          </div>
+          <p class="lede lg:col-span-4 lg:col-start-9 lg:self-end">{d.destinations.text}</p>
+        </header>
+
+        <div class="mt-12 grid gap-6 sm:gap-10 lg:mt-16 lg:grid-cols-12">
+          {d.destinations.list.map((x, i) => (
+            <article class:list={['dest group', i === 0 ? 'lg:col-span-7' : 'lg:col-span-5 lg:mt-32']}>
+              <div class:list={['zoom on-dark relative aspect-[4/5] bg-ink-2 text-white', i === 0 ? 'sm:aspect-[4/3]' : 'sm:aspect-[4/3] lg:aspect-[4/5]']}>
+                <Img name={x.img} alt={x.alt} sizes="(min-width:1024px) 55vw, 100vw" class="h-full w-full object-cover" />
+                <div class="absolute inset-0 bg-black/15"></div>
+                <div class="absolute inset-x-0 bottom-0 h-3/5 bg-gradient-to-t from-black/70 to-transparent"></div>
+                <div class="absolute inset-x-0 bottom-0 p-6 lg:p-8">
+                  <h3 class="text-[28px] leading-none font-normal uppercase tracking-[0.08em] lg:text-[34px]">{x.city}</h3>
+                  <p class="mt-3 text-[14px] text-white/85">{x.code}</p>
+                  <div class="extra"><div class="extra-in"><div class="mt-5 border-t border-white/25 pt-5">
+                    <p class="text-[14px] text-white/90">{x.airport} · ICAO {x.icao}</p>
+                    <p class="mt-1 text-[14px] text-white/75">{x.desc}</p>
+                    <a href="#fbo" class="more mt-4 text-white"><span class="ulink">{d.destinations.cta}</span><Icon name="arrow" className="arr" /></a>
+                  </div></div></div>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <table class="mt-16 w-full text-left text-[14px] lg:mt-24">
+          <caption class="kicker mb-4 text-left">{d.destinations.table.caption}</caption>
+          <thead class="border-b border-ink/80 text-[12px] text-steel max-md:hidden">
+            <tr>{d.destinations.table.cols.map((c) => <th scope="col" class="py-3 pr-6 font-medium">{c}</th>)}</tr>
+          </thead>
+          <tbody>
+            {d.destinations.list.map((x) => (
+              <tr class="border-b border-stone max-md:block max-md:py-3">
+                <td data-label={d.destinations.table.cols[0]} class="py-4 pr-6 max-md:flex max-md:justify-between max-md:gap-6 max-md:py-1.5 max-md:text-right max-md:before:text-left max-md:before:text-steel max-md:before:content-[attr(data-label)]"><span class="font-medium">{x.city}</span><span class="text-steel max-md:hidden"> — {x.airport}</span></td>
+                <td data-label={d.destinations.table.cols[1]} class="py-4 pr-6 tabular-nums max-md:flex max-md:justify-between max-md:py-1.5 max-md:before:text-steel max-md:before:content-[attr(data-label)]">{x.code.split(' ')[0]} / {x.icao}</td>
+                <td data-label={d.destinations.table.cols[2]} class="py-4 pr-6 max-md:flex max-md:justify-between max-md:gap-6 max-md:py-1.5 max-md:text-right max-md:before:text-left max-md:before:text-steel max-md:before:content-[attr(data-label)]">{d.destinations.table.services}</td>
+                <td data-label={d.destinations.table.cols[3]} class="py-4 max-md:flex max-md:justify-between max-md:py-1.5 max-md:before:text-steel max-md:before:content-[attr(data-label)]">{d.destinations.table.tz}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- NOSOTROS + RED -->
+    <section id="about" class="on-dark bg-ink py-20 text-white lg:py-32">
+      <div class="wrap grid gap-14 lg:grid-cols-12 lg:gap-10">
+        <div class="lg:col-span-5" data-reveal>
+          <p class="kicker">{d.about.eyebrow}</p>
+          <h2 class="h-section mt-4">{d.about.title}</h2>
+          <div class="mt-6 space-y-4 text-[16px] leading-[1.65] text-mist">
+            {d.about.paragraphs.map((p) => <p>{p}</p>)}
+          </div>
+          <ol class="mt-12 border-t border-white/15">
+            {d.about.principles.map((p, i) => (
+              <li class="grid grid-cols-[2.5rem_1fr] border-b border-white/15 py-5">
+                <span class="pt-0.5 text-[12px] text-mist tabular-nums">{pad(i + 1)}</span>
                 <div>
-                  <p class="font-display text-sm font-semibold uppercase tracking-[0.12em] text-white">{s.t}</p>
-                  <p class="text-xs text-steel">{s.d}</p>
+                  <p class="text-[17px]">{p.t}</p>
+                  <p class="mt-1 text-[14px] leading-[1.55] text-mist">{p.d}</p>
                 </div>
               </li>
             ))}
           </ol>
         </div>
+        <div id="network" class="lg:col-span-6 lg:col-start-7">
+          <div class="mx-auto max-w-[560px]">
+            <GlobeNetwork client:only="react" cities={d.about.network.cities} hub={d.about.network.hub} />
+          </div>
+          <div class="mt-8 grid gap-3 border-t border-white/15 pt-6 sm:grid-cols-[1fr_1.3fr] sm:gap-8">
+            <p class="text-[18px] leading-snug">{d.about.network.title}</p>
+            <p class="text-[14px] leading-[1.6] text-mist">{d.about.network.text}</p>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- PERMITS -->
-    <section id="permits" class="bg-void py-24 md:py-32">
-      <div class="wrap">
-        <div class="mb-14 max-w-3xl" data-reveal>
-          <p class="eyebrow mb-4 flex items-center gap-4"><span class="draw"></span>{d.permits.eyebrow}</p>
-          <h2 class="h2">{d.permits.title}</h2>
-          <p class="mt-5 max-w-2xl text-on-muted">{d.permits.text}</p>
-        </div>
-        <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-          {d.permits.items.map((p, i) => (
-            <div class="glass flex flex-col gap-4 p-7" data-reveal style={`--d:${i * 90}ms`}>
-              <span class="font-display text-3xl font-bold tracking-[0.12em] text-white">{p.auth}</span>
-              <div class="hairline"></div>
-              <h3 class="eyebrow !text-platinum">{p.title}</h3>
-              <p class="text-sm leading-[22px] text-on-muted">{p.text}</p>
-            </div>
-          ))}
-        </div>
-        <p class="mt-6 text-xs text-steel" data-reveal>{d.permits.note}</p>
-      </div>
-    </section>
-
-    <!-- NETWORK / GLOBE -->
-    <section id="network" class="relative overflow-hidden bg-black py-24 md:py-32">
-      <div class="wrap relative grid items-center gap-10 lg:grid-cols-12">
-        <div class="lg:col-span-5" data-reveal>
-          <p class="eyebrow mb-4 flex items-center gap-4"><span class="draw"></span>{d.network.eyebrow}</p>
-          <h2 class="h2">{d.network.title}</h2>
-          <p class="mt-5 text-on-muted">{d.network.text}</p>
-          <ul class="mt-10 divide-y divide-white/10 border-y border-white/10">
-            {d.network.points.map((p) => (
-              <li class="py-5">
-                <p class="font-display text-sm font-semibold uppercase tracking-[0.14em] text-white">{p.t}</p>
-                <p class="mt-1 text-sm text-steel">{p.d}</p>
-              </li>
+    <!-- CONTACTO -->
+    <section id="contact" class="bg-paper py-20 lg:py-32">
+      <div class="wrap grid gap-12 lg:grid-cols-12 lg:gap-10">
+        <div class="lg:col-span-4">
+          <p class="kicker">{d.contact.eyebrow}</p>
+          <h2 class="h-section mt-4">{d.contact.title}</h2>
+          <p class="lede mt-6">{d.contact.text}</p>
+          <dl class="mt-10 border-t border-stone text-[15px]">
+            {d.contact.info.map((r) => (
+              <div class="grid grid-cols-[10.5rem_1fr] gap-4 max-sm:grid-cols-[8.5rem_1fr] border-b border-stone py-4">
+                <dt class="pt-px text-[13px] text-steel">{r.l}</dt>
+                <dd>
+                  {r.k === 'email' ? <a href={`mailto:${SITE.email}`} class="ulink">{SITE.email}</a>
+                    : r.k === 'phone' ? <a href={SITE.phoneHref} class="ulink">{SITE.phone}</a>
+                    : r.v}
+                </dd>
+              </div>
             ))}
-          </ul>
-        </div>
-        <div class="lg:col-span-7" data-reveal style="--d:120ms">
-          <GlobeNetwork client:only="react" cities={d.network.cities} hub={d.network.hub} />
-        </div>
-      </div>
-    </section>
-
-    <!-- AIRPORTS -->
-    <section class="bg-void py-24 md:py-28">
-      <div class="wrap grid gap-12 lg:grid-cols-12">
-        <div class="lg:col-span-5" data-reveal>
-          <p class="eyebrow mb-4 flex items-center gap-4"><span class="draw"></span>{d.airports.eyebrow}</p>
-          <h2 class="h2">{d.airports.title}</h2>
-          <p class="mt-5 text-on-muted">{d.airports.text}</p>
-        </div>
-        <ul class="grid gap-4 sm:grid-cols-2 lg:col-span-7">
-          {d.airports.list.map((a, i) => (
-            <li class="glass group flex flex-col overflow-hidden !p-0" data-reveal style={`--d:${i * 140}ms`}>
-              <div class="relative aspect-[4/3] overflow-hidden bg-[#0a0a0c]">
-                <img src={`/images/${a.img}.jpg`} alt={a.alt} width="600" height="450" loading="lazy" decoding="async"
-                  class="h-full w-full object-cover transition-transform duration-[1800ms] ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-105" onerror="this.remove()" />
-                <span class="font-display absolute left-4 top-4 rounded-full border border-white/25 bg-black/70 px-3.5 py-1.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-white">{a.tag}</span>
-              </div>
-              <div class="flex flex-1 flex-col gap-3 p-7">
-                <div class="flex items-baseline justify-between gap-4">
-                  <span class="font-display text-4xl font-bold tracking-[0.1em] text-white">{a.iata}</span>
-                  <span class="text-xs text-steel">{a.city}</span>
-                </div>
-                <p class="font-display text-xs font-semibold uppercase tracking-[0.1em] text-platinum">{a.name}</p>
-                <p class="text-sm leading-[22px] text-on-muted">{a.desc}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contact" class="relative bg-[#08080a] py-24 md:py-32">
-      <div class="wrap grid gap-14 lg:grid-cols-12">
-        <div class="lg:col-span-5" data-reveal>
-          <p class="eyebrow mb-4 flex items-center gap-4"><span class="draw"></span>{d.contact.eyebrow}</p>
-          <h2 class="h2">{d.contact.title}</h2>
-          <p class="mt-5 text-on-muted">{d.contact.text}</p>
-          <div class="mt-10 space-y-6">
-            <div class="flex gap-4"><span class="mt-1 text-steel"><Icon name="clock" size={20} /></span>
-              <div><p class="eyebrow !text-[10px]">{d.contact.ops}</p><p class="mt-1 text-sm text-platinum">{d.contact.hours}</p></div></div>
-            <div class="flex gap-4"><span class="mt-1 text-steel"><Icon name="mail" size={20} /></span>
-              <div><p class="eyebrow !text-[10px]">{d.contact.labels.email}</p><a href={`mailto:${SITE.email}`} class="mt-1 block text-sm text-platinum hover:text-white">{SITE.email}</a></div></div>
-            <div class="flex gap-4"><span class="mt-1 text-steel"><Icon name="phone" size={20} /></span>
-              <div><p class="eyebrow !text-[10px]">{d.contact.labels.phone}</p><a href={SITE.phoneHref} class="mt-1 block text-sm text-platinum hover:text-white">{SITE.phone}</a></div></div>
-            <div class="flex gap-4"><span class="mt-1 text-steel"><Icon name="pin" size={20} /></span>
-              <div><p class="eyebrow !text-[10px]">{d.contact.labels.location}</p><p class="mt-1 text-sm text-platinum">{d.contact.location}</p></div></div>
-          </div>
+          </dl>
         </div>
 
-        <form id="contact-form" class="glass grid gap-5 p-6 sm:grid-cols-2 md:p-9 lg:col-span-7" data-reveal style="--d:120ms"
-          data-to={SITE.email} data-subject={d.contact.form.subject}>
-          <div><label class="label" for="f-name">{d.contact.form.name}</label><input class="field" id="f-name" name="name" required autocomplete="name" /></div>
-          <div><label class="label" for="f-company">{d.contact.form.company}</label><input class="field" id="f-company" name="company" autocomplete="organization" /></div>
-          <div><label class="label" for="f-email">{d.contact.form.email}</label><input class="field" id="f-email" name="email" type="email" required autocomplete="email" /></div>
-          <div><label class="label" for="f-phone">{d.contact.form.phone}</label><input class="field" id="f-phone" name="phone" type="tel" autocomplete="tel" /></div>
-          <div><label class="label" for="f-aircraft">{d.contact.form.aircraft}</label><input class="field" id="f-aircraft" name="aircraft" placeholder="G650 / YV-XXXX" /></div>
-          <div><label class="label" for="f-service">{d.contact.form.service}</label>
-            <select class="field" id="f-service" name="service">{d.contact.form.services.map((s) => <option class="bg-void" value={s}>{s}</option>)}</select></div>
-          <div class="sm:col-span-2"><label class="label" for="f-message">{d.contact.form.message}</label><textarea class="field min-h-32" id="f-message" name="message" rows="4"></textarea></div>
-          <div class="flex flex-wrap items-center justify-between gap-4 sm:col-span-2">
-            <p class="max-w-xs text-xs text-steel">{d.contact.form.hint}</p>
-            <button type="submit" class="btn btn-primary">{d.contact.form.send}<Icon name="arrow" size={16} /></button>
-          </div>
-        </form>
+        <div class="lg:col-span-7 lg:col-start-6">
+          <form id="contact-form" class="border border-stone bg-white p-5 sm:p-8 lg:p-10" data-to={SITE.email} data-subject={d.contact.form.subject}>
+            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-stone pb-6">
+              <p class="text-[18px] font-medium">{d.contact.form.legend}</p>
+              <p class="flex items-center gap-2 text-[13px] text-steel"><span class="h-1.5 w-1.5 rounded-full bg-ok"></span>{d.contact.response}</p>
+            </div>
+
+            <div class="mt-8 grid gap-x-6 gap-y-6 sm:grid-cols-2">
+              <div><label class="f-label" for="f-name">{d.contact.form.name}<span class="req">{d.contact.form.required}</span></label><input class="field" id="f-name" name="name" required autocomplete="name" /></div>
+              <div><label class="f-label" for="f-company">{d.contact.form.company}</label><input class="field" id="f-company" name="company" autocomplete="organization" /></div>
+              <div><label class="f-label" for="f-email">{d.contact.form.email}<span class="req">{d.contact.form.required}</span></label><input class="field" id="f-email" name="email" type="email" required autocomplete="email" /></div>
+              <div><label class="f-label" for="f-phone">{d.contact.form.phone}</label><input class="field" id="f-phone" name="phone" type="tel" autocomplete="tel" /></div>
+              <div><label class="f-label" for="f-aircraft">{d.contact.form.aircraft}</label><input class="field" id="f-aircraft" name="aircraft" placeholder={d.contact.form.aircraftPh} /></div>
+              <div><label class="f-label" for="f-airport">{d.contact.form.airport}</label>
+                <select class="field" id="f-airport" name="airport">{d.airports.map((a) => <option value={a.v}>{a.l}</option>)}</select></div>
+              <div><label class="f-label" for="f-date">{d.contact.form.date}</label><input class="field" id="f-date" name="date" type="date" /></div>
+              <div><label class="f-label" for="f-service">{d.contact.form.service}</label>
+                <select class="field" id="f-service" name="service">{d.serviceTypes.map((s) => <option>{s}</option>)}</select></div>
+              <div class="sm:col-span-2"><label class="f-label" for="f-message">{d.contact.form.message}</label><textarea class="field min-h-36" id="f-message" name="message" rows="5" placeholder={d.contact.form.messagePh}></textarea></div>
+            </div>
+
+            <div class="mt-8 flex flex-col-reverse gap-5 border-t border-stone pt-6 sm:flex-row sm:items-center sm:justify-between">
+              <p class="max-w-xs text-[13px] leading-[1.5] text-steel">{d.contact.form.hint}</p>
+              <button type="submit" class="btn btn-dark">{d.contact.form.send}<Icon name="arrow" className="arr" /></button>
+            </div>
+          </form>
+        </div>
       </div>
     </section>
   </main>
@@ -273,15 +366,72 @@ const words = d.hero.title.split(' ');
   <Footer lang={lang} />
 
   <script>
+    const $ = <T extends HTMLElement>(s: string) => document.querySelector<T>(s);
+    const form = $<HTMLFormElement>('#contact-form');
+
+    // Fechas: no permitir días pasados
+    const today = new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+    document.querySelectorAll<HTMLInputElement>('input[type=date]').forEach((i) => (i.min = today));
+
+    // Solicitud rápida -> rellena el formulario principal
+    const goToForm = () => {
+      $('#contact')?.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+      setTimeout(() => $<HTMLInputElement>('#f-name')?.focus({ preventScroll: true }), 600);
+    };
+    $<HTMLFormElement>('#quick')?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const q = new FormData(e.target as HTMLFormElement);
+      for (const k of ['airport', 'service', 'date']) {
+        const el = form?.querySelector<HTMLInputElement | HTMLSelectElement>(`[name=${k}]`);
+        if (el && q.get(k)) el.value = String(q.get(k));
+      }
+      goToForm();
+    });
+    // Enlaces que preseleccionan un servicio
+    document.querySelectorAll<HTMLElement>('[data-prefill-service]').forEach((a) => a.addEventListener('click', () => {
+      const sel = $<HTMLSelectElement>('#f-service');
+      if (sel) sel.value = a.dataset.prefillService!;
+    }));
+
     // Formulario -> mailto
-    const form = document.getElementById('contact-form') as HTMLFormElement | null;
     form?.addEventListener('submit', (e) => {
       e.preventDefault();
       const f = new FormData(form);
-      const lines = ['name', 'company', 'email', 'phone', 'aircraft', 'service']
-        .map((k) => `${(form.querySelector(`[name=${k}]`)?.previousElementSibling as HTMLElement)?.textContent}: ${f.get(k) ?? ''}`);
+      const lines = ['name', 'company', 'email', 'phone', 'aircraft', 'airport', 'date', 'service'].map((k) => {
+        const el = form.querySelector<HTMLInputElement | HTMLSelectElement>(`[name=${k}]`)!;
+        const label = form.querySelector(`label[for=${el.id}]`)?.firstChild?.textContent?.trim();
+        const v = el instanceof HTMLSelectElement ? el.selectedOptions[0]?.text : String(f.get(k) ?? '');
+        return `${label}: ${v}`;
+      });
       const body = `${lines.join('\n')}\n\n${f.get('message') ?? ''}`;
       location.href = `mailto:${form.dataset.to}?subject=${encodeURIComponent(form.dataset.subject ?? '')}&body=${encodeURIComponent(body)}`;
+    });
+
+    // Un solo socio: la foto y el pie cambian según el servicio
+    const swap = $('#swap');
+    const items = [...document.querySelectorAll<HTMLButtonElement>('.ops-item')];
+    const capN = $('#cap-n'), capT = $('#cap-t'), capD = $('#cap-d');
+    const canHover = matchMedia('(hover: hover) and (min-width: 1024px)').matches;
+    const initial = [capN?.textContent, capT?.textContent];
+    const activate = (btn: HTMLButtonElement | null) => {
+      items.forEach((b) => {
+        const on = b === btn;
+        b.setAttribute('aria-pressed', String(on));
+        (b.nextElementSibling as HTMLElement).classList.toggle('hidden', !on);
+      });
+      const key = btn ? btn.dataset.i! : 'default';
+      swap?.querySelectorAll<HTMLImageElement>('img').forEach((img) => img.classList.toggle('on', img.dataset.k === key));
+      if (!capN || !capT || !capD) return;
+      capN.textContent = btn ? `${String(Number(btn.dataset.i) + 1).padStart(2, '0')} / ${String(items.length).padStart(2, '0')}` : initial[0]!;
+      capT.textContent = btn ? btn.dataset.t! : initial[1]!;
+      capD.textContent = btn ? btn.dataset.d! : '';
+    };
+    items.forEach((b) => {
+      if (canHover) {
+        b.addEventListener('mouseenter', () => activate(b));
+        b.addEventListener('focus', () => activate(b));
+      }
+      b.addEventListener('click', () => activate(b.getAttribute('aria-pressed') === 'true' && !canHover ? null : b));
     });
   </script>
 </Base>

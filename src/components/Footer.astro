@@ -1,84 +1,63 @@
 ---
 import Icon from './Icon';
-import { t, homePath, type Lang } from '../i18n';
-import { legalSlugs, legalLabels, type LegalKey } from '../i18n/legal';
+import { t, homePath, otherLang, type Lang } from '../i18n';
+import { legalSlugs, legalLabels } from '../i18n/legal';
 import { SITE } from '../config';
 
-const { lang } = Astro.props as { lang: Lang };
+const { lang, otherPath } = Astro.props as { lang: Lang; otherPath?: string };
 const d = t(lang);
 const h = homePath(lang);
-const serviceLinks = [
-  [h + '#management', d.nav.management],
-  [h + '#fbo', d.nav.fbo],
-  [h + '#aog', d.nav.aog],
-  [h + '#permits', d.permits.eyebrow],
-];
-const companyLinks = [
-  [h + '#services', d.nav.services],
-  [h + '#network', d.nav.network],
-  [h + '#contact', d.nav.contact],
-];
-const legalKeys: LegalKey[] = ['privacy', 'terms', 'cookies'];
+const other = otherLang(lang);
+const f = d.footer;
+const cols = [
+  [f.cols.services, [[h + '#management', f.services[0]], [h + '#fbo', f.services[1]], [h + '#aog', f.services[2]], [h + '#permits', f.services[3]]]],
+  [f.cols.operations, [[h + '#destinations', f.operations[0]], [h + '#destinations', f.operations[1]], [h + '#contact', f.operations[2]]]],
+  [f.cols.company, [
+    [h + '#about', d.nav.about], [h + '#contact', d.nav.contact],
+    [legalSlugs[lang].privacy, legalLabels[lang].privacy], [legalSlugs[lang].terms, legalLabels[lang].terms], [legalSlugs[lang].cookies, legalLabels[lang].cookies],
+  ]],
+] as const;
 ---
-<footer class="border-t border-white/10 bg-black">
-  <div class="wrap py-16 md:py-20">
+<footer class="on-dark bg-[#0c0e11] text-white">
+  <div class="wrap pt-16 pb-10 md:pt-20">
     <div class="grid gap-12 lg:grid-cols-12">
       <div class="lg:col-span-4">
-        <a href={h} aria-label="Vanguard Aero Services">
-          <img src="/brand/logo-horizontal-white.png" alt="Vanguard Aero Services" width="549" height="120" class="h-11 w-auto" loading="lazy" />
+        <a href={h} aria-label="Vanguard Aero Services" class="inline-block">
+          <img src="/brand/logo-horizontal-white.png" alt="Vanguard Aero Services" width="549" height="120" class="h-9 w-auto" loading="lazy" />
         </a>
-        <p class="mt-6 max-w-sm text-sm leading-[22px] text-steel">{d.footer.tagline}</p>
-        <p class="eyebrow mt-8 mb-3 !text-[10px]">{d.footer.airports}</p>
-        <div class="flex gap-3">
-          {d.airports.list.map((a) => (
-            <span class="font-display rounded border border-white/15 px-4 py-2 text-sm font-bold tracking-[0.18em] text-white">{a.iata}</span>
-          ))}
-        </div>
+        <p class="mt-6 max-w-xs text-[14px] leading-[1.6] text-mist">{f.tagline}</p>
+        <dl class="mt-8 space-y-4 text-[14px]">
+          <div>
+            <dt class="kicker">{d.nav.menuContact}</dt>
+            <dd class="mt-1"><a href={SITE.phoneHref} class="ulink">{SITE.phone}</a></dd>
+          </div>
+          <div>
+            <dt class="kicker">Email</dt>
+            <dd class="mt-1"><a href={`mailto:${SITE.email}`} class="ulink">{SITE.email}</a></dd>
+          </div>
+        </dl>
       </div>
 
-      <nav class="grid grid-cols-2 gap-10 sm:grid-cols-3 lg:col-span-5 lg:col-start-6" aria-label="Footer">
-        <div>
-          <p class="eyebrow mb-5 !text-white">{d.footer.cols.services}</p>
-          <ul class="space-y-3">
-            {serviceLinks.map(([href, label]) => (
-              <li><a href={href} class="text-sm text-steel transition-colors duration-500 hover:text-white">{label}</a></li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <p class="eyebrow mb-5 !text-white">{d.footer.cols.company}</p>
-          <ul class="space-y-3">
-            {companyLinks.map(([href, label]) => (
-              <li><a href={href} class="text-sm text-steel transition-colors duration-500 hover:text-white">{label}</a></li>
-            ))}
-          </ul>
-        </div>
-        <div class="col-span-2 sm:col-span-1">
-          <p class="eyebrow mb-5 !text-white">{d.footer.cols.legal}</p>
-          <ul class="space-y-3">
-            {legalKeys.map((k) => (
-              <li><a href={legalSlugs[lang][k]} class="text-sm text-steel transition-colors duration-500 hover:text-white">{legalLabels[lang][k]}</a></li>
-            ))}
-          </ul>
-        </div>
+      <nav class="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:col-span-7 lg:col-start-6" aria-label="Footer">
+        {cols.map(([title, items]) => (
+          <div>
+            <p class="kicker mb-5">{title}</p>
+            <ul class="space-y-3 text-[14px]">
+              {items.map(([href, label]) => <li><a href={href} class="ulink text-white/85 hover:text-white">{label}</a></li>)}
+            </ul>
+          </div>
+        ))}
       </nav>
-
-      <div class="lg:col-span-3">
-        <p class="eyebrow mb-5 !text-white">{d.contact.eyebrow}</p>
-        <ul class="space-y-4 text-sm text-steel">
-          <li class="flex items-center gap-3"><Icon name="clock" size={16} className="shrink-0" />{d.footer.hours}</li>
-          <li class="flex items-center gap-3"><Icon name="mail" size={16} className="shrink-0" /><a href={`mailto:${SITE.email}`} class="transition-colors duration-500 hover:text-white">{SITE.email}</a></li>
-          <li class="flex items-center gap-3"><Icon name="phone" size={16} className="shrink-0" /><a href={SITE.phoneHref} class="transition-colors duration-500 hover:text-white">{SITE.phone}</a></li>
-          <li class="flex items-start gap-3"><Icon name="pin" size={16} className="mt-1 shrink-0" />{d.contact.location}</li>
-        </ul>
-      </div>
     </div>
 
-    <div class="mt-16 flex flex-col items-start justify-between gap-4 border-t border-white/10 pt-8 text-xs text-slate md:flex-row md:items-center">
-      <p>© {new Date().getFullYear()} Vanguard Aero Services. {d.footer.rights}</p>
-      <a href="#top" class="font-display inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-steel transition-colors duration-500 hover:text-white">
-        {d.footer.top}<Icon name="down" size={14} className="rotate-180" />
-      </a>
+    <div class="mt-16 flex flex-col gap-6 border-t border-white/12 pt-8 text-[13px] text-mist md:flex-row md:items-center md:justify-between">
+      <p>© {new Date().getFullYear()} Vanguard Aero Services. {f.rights}</p>
+      <div class="flex items-center gap-8">
+        <p class="tracking-[0.04em]">
+          <span class="font-semibold text-white">{lang.toUpperCase()}</span><span class="mx-1">/</span><a href={otherPath ?? homePath(other)} hreflang={other} class="ulink" aria-label={d.nav.langLabel}>{other.toUpperCase()}</a>
+        </p>
+        <a href="#top" class="inline-flex items-center gap-2 ulink">{f.top}<Icon name="up" size={14} /></a>
+      </div>
     </div>
   </div>
 </footer>

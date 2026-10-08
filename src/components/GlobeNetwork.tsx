@@ -59,9 +59,9 @@ export default function GlobeNetwork({ cities, hub }: { cities: Cities; hub: str
       globe = new (Globe as any)(el, { animateIn: true })
         .backgroundColor('rgba(0,0,0,0)')
         .showAtmosphere(true)
-        .atmosphereColor('#ffffff')
-        .atmosphereAltitude(0.12)
-        .globeMaterial(new THREE.MeshPhongMaterial({ color: new THREE.Color(0x0a0a0d), emissive: new THREE.Color(0x040405), shininess: 12 }))
+        .atmosphereColor('#9fb3cf')
+        .atmosphereAltitude(0.08)
+        .globeMaterial(new THREE.MeshPhongMaterial({ color: new THREE.Color(0x15191f), emissive: new THREE.Color(0x07090c), shininess: 12 }))
         .arcsData(arcs)
         .arcColor(() => ['rgba(255,255,255,0.04)', 'rgba(255,255,255,0.95)'])
         .arcStroke(0.6)
@@ -85,8 +85,8 @@ export default function GlobeNetwork({ cities, hub }: { cities: Cities; hub: str
         .ringsData([CCS])
         .ringColor(() => (t: number) => `rgba(255,255,255,${1 - t})`)
         .ringMaxRadius(6)
-        .ringPropagationSpeed(2.2)
-        .ringRepeatPeriod(1500);
+        .ringPropagationSpeed(1.4)
+        .ringRepeatPeriod(2600);
 
       // Iluminación: luz suave fría
       const scene = globe.scene();
@@ -98,7 +98,7 @@ export default function GlobeNetwork({ cities, hub }: { cities: Cities; hub: str
 
       const c = globe.controls();
       c.autoRotate = !reduce;
-      c.autoRotateSpeed = 0.55;
+      c.autoRotateSpeed = 0.35;
       c.enableZoom = false;
       c.enablePan = false;
       globe.pointOfView({ lat: 14, lng: -62, altitude: 1.95 }, 0);
@@ -143,7 +143,7 @@ export default function GlobeNetwork({ cities, hub }: { cities: Cities; hub: str
       />
       {!ready && (
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="h-3/4 w-3/4 animate-pulse rounded-full bg-navy/60" />
+          <div className="h-3/4 w-3/4 animate-pulse rounded-full bg-white/5" />
         </div>
       )}
     </div>

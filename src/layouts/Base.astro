@@ -17,7 +17,7 @@ const otherHref = new URL(otherPath ?? homePath(other), SITE.url).href;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{pageTitle}</title>
     <meta name="description" content={pageDesc} />
-    <meta name="theme-color" content="#0a0c10" />
+    <meta name="theme-color" content="#111418" />
     <link rel="canonical" href={canonical} />
     <link rel="alternate" hreflang={lang} href={canonical} />
     <link rel="alternate" hreflang={other} href={otherHref} />
@@ -30,8 +30,7 @@ const otherHref = new URL(otherPath ?? homePath(other), SITE.url).href;
     <meta property="og:locale" content={lang === 'es' ? 'es_VE' : 'en_US'} />
     <script is:inline>document.documentElement.classList.remove('no-js');</script>
   </head>
-  <body>
-    <div id="progress"></div>
+  <body id="top">
     <slot />
     <script>
       // Revelado al hacer scroll
@@ -40,18 +39,10 @@ const otherHref = new URL(otherPath ?? homePath(other), SITE.url).href;
         (entries) => entries.forEach((e) => {
           if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
         }),
-        { threshold: 0.12, rootMargin: '0px 0px -40px 0px' },
+        { threshold: 0.15, rootMargin: '0px 0px -60px 0px' },
       );
       els.forEach((el) => io.observe(el));
 
-      // Barra de progreso de lectura
-      const bar = document.getElementById('progress')!;
-      const upd = () => {
-        const max = document.documentElement.scrollHeight - innerHeight;
-        bar.style.transform = `scaleX(${max > 0 ? Math.min(scrollY / max, 1) : 0})`;
-      };
-      upd();
-      addEventListener('scroll', upd, { passive: true });
     </script>
   </body>
 </html>

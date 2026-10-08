@@ -1,0 +1,36 @@
+---
+// Foto de /public/images con su versión -sm para pantallas pequeñas.
+// Las dimensiones evitan saltos de maquetación mientras carga.
+const dims = {
+  aog: [2400, 1348], caracas: [1800, 1012], hero: [2400, 1535], management: [1371, 1600],
+  margarita: [1800, 1200], 'ops-catering': [1200, 1800], 'ops-concierge': [1400, 933], 'ops-fuel': [1400, 933],
+  'ops-handling': [1400, 933], 'ops-hotel': [1400, 933], 'ops-transport': [1400, 788], permits: [1600, 1068],
+  'svc-fbo': [1600, 900], 'svc-management': [1400, 2100],
+} as const;
+export type PhotoName = keyof typeof dims;
+
+interface Props {
+  name: string;
+  alt: string;
+  sizes?: string;
+  class?: string;
+  priority?: boolean;
+  [attr: string]: unknown;
+}
+const { name, alt, sizes = '100vw', class: cls, priority = false, ...rest } = Astro.props;
+const [w, h] = dims[name as PhotoName] ?? [1600, 1000];
+const smW = name === 'management' ? 700 : Math.round(w / 2);
+---
+<img
+  src={`/images/${name}.jpg`}
+  srcset={`/images/${name}-sm.jpg ${smW}w, /images/${name}.jpg ${w}w`}
+  sizes={sizes}
+  width={w}
+  height={h}
+  alt={alt}
+  loading={priority ? 'eager' : 'lazy'}
+  decoding={priority ? 'sync' : 'async'}
+  fetchpriority={priority ? 'high' : undefined}
+  class={cls}
+  {...rest}
+/>
