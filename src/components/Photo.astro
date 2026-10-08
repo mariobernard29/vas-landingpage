@@ -1,9 +1,11 @@
 ---
-// Foto con revelado en cortina. Si el archivo no existe, queda un bloque oscuro.
+// Foto con revelado en cortina. Se observa el contenedor exterior (sin recorte) para que el IntersectionObserver lo detecte.
 interface Props { src: string; alt: string; class?: string; width: number; height: number; delay?: number }
 const { src, alt, class: cls = '', width, height, delay = 0 } = Astro.props;
 ---
-<div data-reveal="clip" style={`aspect-ratio:${width}/${height};--d:${delay}ms`} class:list={['relative overflow-hidden bg-[#0a0a0c]', cls]}>
-  <img src={src} alt={alt} width={width} height={height} loading="lazy" decoding="async"
-    class="absolute inset-0 h-full w-full object-cover" onerror="this.remove()" />
+<div data-reveal="photo" style={`aspect-ratio:${width}/${height};--d:${delay}ms`} class:list={['relative', cls]}>
+  <div class="clip absolute inset-0 overflow-hidden rounded-[inherit] bg-[#0a0a0c]">
+    <img src={src} alt={alt} width={width} height={height} loading="lazy" decoding="async"
+      class="h-full w-full object-cover" onerror="this.remove()" />
+  </div>
 </div>
