@@ -3,7 +3,7 @@
 Dirección fotográfica: fotografía real de aviación ejecutiva, luz natural, operación en plataforma.
 Se retiraron las imágenes generadas por IA anteriores (atardeceres dorados “perfectos”, motor de avión comercial).
 
-Cada foto existe en dos tamaños: `<nombre>.jpg` (grande) y `<nombre>-sm.jpg` (móvil). `src/components/Img.astro` arma el `srcset`.
+Cada foto existe en tres tamaños: `<nombre>-sm.jpg` (960 px), `<nombre>-md.jpg` (1600 px) y `<nombre>.jpg` (hasta 3200 px). `src/components/Img.astro` arma el `srcset` con las dimensiones de `src/photos.json`; el navegador descarga solo el tamaño que necesita.
 
 | Archivo | Uso | Autor (Unsplash) | Página |
 |---|---|---|---|
