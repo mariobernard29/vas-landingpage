@@ -112,8 +112,8 @@ export const es = {
     title: 'Caracas e Isla de Margarita',
     text: 'Operamos en el Aeropuerto Internacional Simón Bolívar y en el Aeropuerto Internacional Santiago Mariño, con atención FBO, gestión y soporte AOG.',
     list: [
-      { iata: 'CCS', name: 'Aeropuerto Internacional Simón Bolívar', city: 'Maiquetía · Caracas' },
-      { iata: 'PMV', name: 'Aeropuerto Internacional Santiago Mariño', city: 'Isla de Margarita' },
+      { iata: 'CCS', img: 'caracas', tag: 'Centro de negocios', name: 'Aeropuerto Internacional Simón Bolívar', city: 'Maiquetía · Caracas', desc: 'Puerta de entrada a la capital y principal centro de negocios del país. Atención FBO, gestión de aeronaves y soporte AOG para vuelos corporativos y ejecutivos.', alt: 'Vista de Caracas y el cerro El Ávila' },
+      { iata: 'PMV', img: 'margarita', tag: 'Turismo', name: 'Aeropuerto Internacional Santiago Mariño', city: 'Isla de Margarita', desc: 'Destino turístico por excelencia del Caribe venezolano. Recibimos a propietarios, pasajeros y tripulaciones con traslados, hospedaje y conserjería a la medida.', alt: 'Vista aérea de la costa de la Isla de Margarita' },
     ],
   },
   contact: {

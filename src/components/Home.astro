@@ -221,11 +221,19 @@ const words = d.hero.title.split(' ');
         </div>
         <ul class="grid gap-4 sm:grid-cols-2 lg:col-span-7">
           {d.airports.list.map((a, i) => (
-            <li class="glass flex flex-col gap-10 p-8" data-reveal style={`--d:${i * 140}ms`}>
-              <span class="font-display text-6xl font-bold tracking-[0.1em] text-white">{a.iata}</span>
-              <div>
-                <p class="font-display text-sm font-semibold uppercase tracking-[0.1em] text-platinum">{a.name}</p>
-                <p class="mt-1 text-sm text-steel">{a.city}</p>
+            <li class="glass group flex flex-col overflow-hidden !p-0" data-reveal style={`--d:${i * 140}ms`}>
+              <div class="relative aspect-[4/3] overflow-hidden bg-[#0a0a0c]">
+                <img src={`/images/${a.img}.jpg`} alt={a.alt} width="600" height="450" loading="lazy" decoding="async"
+                  class="h-full w-full object-cover transition-transform duration-[1800ms] ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-105" onerror="this.remove()" />
+                <span class="font-display absolute left-4 top-4 rounded-full border border-white/25 bg-black/70 px-3.5 py-1.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-white">{a.tag}</span>
+              </div>
+              <div class="flex flex-1 flex-col gap-3 p-7">
+                <div class="flex items-baseline justify-between gap-4">
+                  <span class="font-display text-4xl font-bold tracking-[0.1em] text-white">{a.iata}</span>
+                  <span class="text-xs text-steel">{a.city}</span>
+                </div>
+                <p class="font-display text-xs font-semibold uppercase tracking-[0.1em] text-platinum">{a.name}</p>
+                <p class="text-sm leading-[22px] text-on-muted">{a.desc}</p>
               </div>
             </li>
           ))}

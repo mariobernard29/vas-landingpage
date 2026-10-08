@@ -114,8 +114,8 @@ export const en: Dict = {
     title: 'Caracas and Margarita Island',
     text: 'We operate at Simón Bolívar International Airport and Santiago Mariño International Airport, with FBO handling, management and AOG support.',
     list: [
-      { iata: 'CCS', name: 'Simón Bolívar International Airport', city: 'Maiquetía · Caracas' },
-      { iata: 'PMV', name: 'Santiago Mariño International Airport', city: 'Margarita Island' },
+      { iata: 'CCS', img: 'caracas', tag: 'Business hub', name: 'Simón Bolívar International Airport', city: 'Maiquetía · Caracas', desc: 'Gateway to the capital and the country’s main business hub. FBO handling, aircraft management and AOG support for corporate and executive flights.', alt: 'View of Caracas and El Ávila mountain' },
+      { iata: 'PMV', img: 'margarita', tag: 'Tourism', name: 'Santiago Mariño International Airport', city: 'Margarita Island', desc: 'The Venezuelan Caribbean’s premier tourist destination. We welcome owners, passengers and crews with tailored transfers, accommodation and concierge.', alt: 'Aerial view of the Margarita Island coast' },
     ],
   },
   contact: {
