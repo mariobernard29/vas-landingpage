@@ -1,0 +1,293 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from './Header.astro';
+import Photo from './Photo.astro';
+import Icon from './Icon';
+import GlobeNetwork from './GlobeNetwork';
+import Footer from './Footer.astro';
+import { t, type Lang } from '../i18n';
+import { SITE } from '../config';
+
+const { lang } = Astro.props as { lang: Lang };
+const d = t(lang);
+const words = d.hero.title.split(' ');
+---
+<Base lang={lang}>
+  <Header lang={lang} />
+
+  <main id="top">
+    <!-- HERO -->
+    <section class="relative flex min-h-[100svh] items-center overflow-hidden bg-void pt-20">
+      <img src="/images/hero.jpg" alt="" width="1672" height="941" fetchpriority="high"
+        class="hero-img absolute inset-0 h-full w-full object-cover object-right" onerror="this.remove()" />
+      <div class="absolute inset-0 bg-black/55"></div>
+
+      <div class="wrap relative py-24">
+        <div class="mb-8 flex flex-wrap items-center gap-x-6 gap-y-3" data-reveal>
+          <span class="inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-void/70 px-4 py-1.5">
+            <span class="relative flex h-2 w-2"><span class="ping-soft absolute inline-flex h-full w-full rounded-full bg-emerald-400"></span><span class="relative inline-flex h-2 w-2 rounded-full bg-emerald-400"></span></span>
+            <span class="font-display text-[10px] font-semibold uppercase tracking-[0.2em] text-platinum">{d.hero.status}</span>
+          </span>
+          <span class="font-display text-[10px] font-semibold uppercase tracking-[0.2em] text-steel">{d.hero.ribbon}</span>
+          <span class="font-mono text-[11px] tracking-widest text-steel"><span data-utc>--:--</span> UTC</span>
+        </div>
+
+        <p class="eyebrow mb-5 flex items-center gap-4" data-reveal style="--d:80ms"><span class="draw"></span>{d.hero.eyebrow}</p>
+        <h1 class="font-display max-w-4xl text-[36px] leading-[44px] font-bold uppercase tracking-[0.06em] text-white md:text-[56px] md:leading-[64px] md:tracking-[0.08em]" aria-label={d.hero.title}>
+          {words.map((w, i) => <><span class="word"><span style={`--i:${i}`}>{w}</span></span>{' '}</>)}
+        </h1>
+        <p class="mt-7 max-w-2xl text-base leading-[26px] text-on-muted md:text-[17px]" data-reveal style="--d:240ms">{d.hero.text}</p>
+        <div class="mt-10 flex flex-wrap gap-4" data-reveal style="--d:320ms">
+          <a href="#contact" class="btn btn-primary">{d.hero.cta1}<Icon name="arrow" size={16} /></a>
+          <a href="#aog" class="btn btn-outline"><Icon name="alert" size={16} className="text-crimson" />{d.hero.cta2}</a>
+        </div>
+
+        <dl class="mt-16 grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-white/10 bg-white/10 md:grid-cols-4" data-reveal style="--d:420ms">
+          {d.hero.facts.map((f) => (
+            <div class="bg-void/85 px-5 py-5 md:px-7">
+              <dt class="font-display text-xl font-semibold tracking-[0.06em] text-white md:text-2xl">{f.v}</dt>
+              <dd class="eyebrow mt-1.5 !text-[10px]">{f.l}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services" class="relative bg-void py-24 md:py-32">
+      <div class="wrap">
+        <div class="mb-14 max-w-3xl" data-reveal>
+          <p class="eyebrow mb-4 flex items-center gap-4"><span class="draw"></span>{d.services.eyebrow}</p>
+          <h2 class="h2">{d.services.title}</h2>
+          <p class="mt-5 max-w-2xl text-on-muted">{d.services.text}</p>
+        </div>
+        <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          {d.services.items.map((s, i) => (
+            <a href={s.href} class="glass group flex flex-col gap-6 p-7" data-reveal style={`--d:${i * 90}ms`}>
+              <div class="flex items-center justify-between">
+                <span class="flex h-12 w-12 items-center justify-center rounded border border-white/10 bg-navy-2/60 text-white transition-all duration-300 group-hover:bg-white group-hover:text-void"><Icon name={s.icon} size={24} /></span>
+                <span class="eyebrow !text-[10px]">{s.tag}</span>
+              </div>
+              <div class="flex-1">
+                <h3 class="font-display text-lg font-semibold uppercase tracking-[0.04em]">{s.title}</h3>
+                <p class="mt-3 text-sm leading-[22px] text-on-muted">{s.text}</p>
+              </div>
+              <span class="inline-flex items-center gap-2 text-steel transition-colors group-hover:text-white"><Icon name="arrow" size={18} className="transition-transform duration-300 group-hover:translate-x-1.5" /></span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- MANAGEMENT -->
+    <section id="management" class="bg-[#08080a] py-24 md:py-32">
+      <div class="wrap grid items-center gap-14 lg:grid-cols-12 lg:gap-20">
+        <div class="lg:col-span-6" data-reveal>
+          <p class="eyebrow mb-4 flex items-center gap-4"><span class="draw"></span>{d.management.eyebrow}</p>
+          <h2 class="h2">{d.management.title}</h2>
+          <p class="mt-5 text-on-muted">{d.management.text}</p>
+          <ul class="mt-10 space-y-3">
+            {d.management.items.map((it) => (
+              <li class="glass flex gap-5 p-5">
+                <span class="mt-0.5 text-platinum"><Icon name={it.icon} size={24} /></span>
+                <div>
+                  <h3 class="font-display text-sm font-semibold uppercase tracking-[0.1em]">{it.title}</h3>
+                  <p class="mt-1.5 text-sm leading-[22px] text-on-muted">{it.text}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div class="relative lg:col-span-6" data-reveal style="--d:150ms">
+          <Photo src="/images/management.jpg" alt={d.management.photoAlt} width={1371} height={1600} class="rounded-lg" />
+          <span class="font-display absolute bottom-5 left-5 rounded-full border border-white/20 bg-void/80 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-white">{d.management.badge}</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- FBO -->
+    <section id="fbo" class="bg-void py-24 md:py-32">
+      <div class="wrap">
+        <div class="mb-14 grid gap-8 lg:grid-cols-12 lg:items-end" data-reveal>
+          <div class="lg:col-span-7">
+            <p class="eyebrow mb-4 flex items-center gap-4"><span class="draw"></span>{d.fbo.eyebrow}</p>
+            <h2 class="h2">{d.fbo.title}</h2>
+          </div>
+          <p class="text-on-muted lg:col-span-5">{d.fbo.text}</p>
+        </div>
+
+        <div class="grid gap-4 lg:grid-cols-12">
+          <div class="grid gap-4 sm:grid-cols-2 lg:col-span-8">
+            {d.fbo.items.map((it, i) => (
+              <div class="glass group flex flex-col gap-4 p-6" data-reveal style={`--d:${(i % 2) * 90}ms`}>
+                <span class="flex h-11 w-11 items-center justify-center rounded border border-white/10 bg-navy-2/60 text-white transition-all duration-300 group-hover:bg-white group-hover:text-void"><Icon name={it.icon} size={22} /></span>
+                <h3 class="font-display text-base font-semibold uppercase tracking-[0.05em]">{it.title}</h3>
+                <p class="text-sm leading-[22px] text-on-muted">{it.text}</p>
+              </div>
+            ))}
+          </div>
+          <div class="flex flex-col gap-4 lg:col-span-4" data-reveal style="--d:120ms">
+            <Photo src="/images/fbo.jpg" alt={d.fbo.photoAlt} width={1086} height={1448} class="min-h-[320px] flex-1 rounded-lg [&>img]:h-full" />
+            <p class="glass flex items-center justify-between gap-4 px-6 py-5 font-display text-xs font-semibold uppercase leading-5 tracking-[0.12em] text-platinum">
+              {d.fbo.more}
+              <Icon name="concierge" size={22} className="shrink-0 text-steel" />
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AOG -->
+    <section id="aog" class="relative overflow-hidden bg-[#08080a] py-24 md:py-32">
+      <img src="/images/aog.jpg" alt="" width="1832" height="858" loading="lazy" class="absolute inset-0 h-full w-full object-cover opacity-60" onerror="this.remove()" />
+      <div class="absolute inset-0 bg-[#08080a]/75"></div>
+      <div class="wrap relative">
+        <div class="grid gap-12 lg:grid-cols-12 lg:items-center">
+          <div class="lg:col-span-7" data-reveal>
+            <p class="eyebrow mb-4 flex items-center gap-3 !text-crimson"><span class="h-2 w-2 animate-pulse rounded-full bg-crimson"></span>{d.aog.eyebrow}</p>
+            <h2 class="h2">{d.aog.title}</h2>
+            <p class="mt-5 max-w-2xl text-on-muted">{d.aog.text}</p>
+            <div class="mt-9 flex flex-wrap gap-4">
+              <a href="#contact" class="btn btn-primary">{d.aog.cta}<Icon name="arrow" size={16} /></a>
+              <a href={SITE.phoneHref} class="btn btn-outline"><Icon name="phone" size={16} />{SITE.phone}</a>
+            </div>
+          </div>
+          <ol class="grid gap-3 lg:col-span-5" data-reveal style="--d:150ms">
+            {d.aog.steps.map((s) => (
+              <li class="glass flex items-center gap-5 px-6 py-5">
+                <span class="font-display text-2xl font-semibold tracking-[0.06em] text-slate">{s.n}</span>
+                <div>
+                  <p class="font-display text-sm font-semibold uppercase tracking-[0.12em] text-white">{s.t}</p>
+                  <p class="text-xs text-steel">{s.d}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- PERMITS -->
+    <section id="permits" class="bg-void py-24 md:py-32">
+      <div class="wrap">
+        <div class="mb-14 max-w-3xl" data-reveal>
+          <p class="eyebrow mb-4 flex items-center gap-4"><span class="draw"></span>{d.permits.eyebrow}</p>
+          <h2 class="h2">{d.permits.title}</h2>
+          <p class="mt-5 max-w-2xl text-on-muted">{d.permits.text}</p>
+        </div>
+        <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          {d.permits.items.map((p, i) => (
+            <div class="glass flex flex-col gap-4 p-7" data-reveal style={`--d:${i * 90}ms`}>
+              <span class="font-display text-3xl font-bold tracking-[0.12em] text-white">{p.auth}</span>
+              <div class="hairline"></div>
+              <h3 class="eyebrow !text-platinum">{p.title}</h3>
+              <p class="text-sm leading-[22px] text-on-muted">{p.text}</p>
+            </div>
+          ))}
+        </div>
+        <p class="mt-6 text-xs text-steel" data-reveal>{d.permits.note}</p>
+      </div>
+    </section>
+
+    <!-- NETWORK / GLOBE -->
+    <section id="network" class="relative overflow-hidden bg-black py-24 md:py-32">
+      <div class="wrap relative grid items-center gap-10 lg:grid-cols-12">
+        <div class="lg:col-span-5" data-reveal>
+          <p class="eyebrow mb-4 flex items-center gap-4"><span class="draw"></span>{d.network.eyebrow}</p>
+          <h2 class="h2">{d.network.title}</h2>
+          <p class="mt-5 text-on-muted">{d.network.text}</p>
+          <ul class="mt-10 divide-y divide-white/10 border-y border-white/10">
+            {d.network.points.map((p) => (
+              <li class="py-5">
+                <p class="font-display text-sm font-semibold uppercase tracking-[0.14em] text-white">{p.t}</p>
+                <p class="mt-1 text-sm text-steel">{p.d}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div class="lg:col-span-7" data-reveal style="--d:120ms">
+          <GlobeNetwork client:only="react" cities={d.network.cities} hub={d.network.hub} />
+        </div>
+      </div>
+    </section>
+
+    <!-- AIRPORTS -->
+    <section class="bg-void py-24 md:py-28">
+      <div class="wrap grid gap-12 lg:grid-cols-12">
+        <div class="lg:col-span-5" data-reveal>
+          <p class="eyebrow mb-4 flex items-center gap-4"><span class="draw"></span>{d.airports.eyebrow}</p>
+          <h2 class="h2">{d.airports.title}</h2>
+          <p class="mt-5 text-on-muted">{d.airports.text}</p>
+        </div>
+        <ul class="grid gap-4 sm:grid-cols-2 lg:col-span-7">
+          {d.airports.list.map((a, i) => (
+            <li class="glass flex flex-col gap-10 p-8" data-reveal style={`--d:${i * 140}ms`}>
+              <span class="font-display text-6xl font-bold tracking-[0.1em] text-white">{a.iata}</span>
+              <div>
+                <p class="font-display text-sm font-semibold uppercase tracking-[0.1em] text-platinum">{a.name}</p>
+                <p class="mt-1 text-sm text-steel">{a.city}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="relative bg-[#08080a] py-24 md:py-32">
+      <div class="wrap grid gap-14 lg:grid-cols-12">
+        <div class="lg:col-span-5" data-reveal>
+          <p class="eyebrow mb-4 flex items-center gap-4"><span class="draw"></span>{d.contact.eyebrow}</p>
+          <h2 class="h2">{d.contact.title}</h2>
+          <p class="mt-5 text-on-muted">{d.contact.text}</p>
+          <div class="mt-10 space-y-6">
+            <div class="flex gap-4"><span class="mt-1 text-steel"><Icon name="clock" size={20} /></span>
+              <div><p class="eyebrow !text-[10px]">{d.contact.ops}</p><p class="mt-1 text-sm text-platinum">{d.contact.hours}</p></div></div>
+            <div class="flex gap-4"><span class="mt-1 text-steel"><Icon name="mail" size={20} /></span>
+              <div><p class="eyebrow !text-[10px]">{d.contact.labels.email}</p><a href={`mailto:${SITE.email}`} class="mt-1 block text-sm text-platinum hover:text-white">{SITE.email}</a></div></div>
+            <div class="flex gap-4"><span class="mt-1 text-steel"><Icon name="phone" size={20} /></span>
+              <div><p class="eyebrow !text-[10px]">{d.contact.labels.phone}</p><a href={SITE.phoneHref} class="mt-1 block text-sm text-platinum hover:text-white">{SITE.phone}</a></div></div>
+            <div class="flex gap-4"><span class="mt-1 text-steel"><Icon name="pin" size={20} /></span>
+              <div><p class="eyebrow !text-[10px]">{d.contact.labels.location}</p><p class="mt-1 text-sm text-platinum">{d.contact.location}</p></div></div>
+          </div>
+        </div>
+
+        <form id="contact-form" class="glass grid gap-5 p-6 sm:grid-cols-2 md:p-9 lg:col-span-7" data-reveal style="--d:120ms"
+          data-to={SITE.email} data-subject={d.contact.form.subject}>
+          <div><label class="label" for="f-name">{d.contact.form.name}</label><input class="field" id="f-name" name="name" required autocomplete="name" /></div>
+          <div><label class="label" for="f-company">{d.contact.form.company}</label><input class="field" id="f-company" name="company" autocomplete="organization" /></div>
+          <div><label class="label" for="f-email">{d.contact.form.email}</label><input class="field" id="f-email" name="email" type="email" required autocomplete="email" /></div>
+          <div><label class="label" for="f-phone">{d.contact.form.phone}</label><input class="field" id="f-phone" name="phone" type="tel" autocomplete="tel" /></div>
+          <div><label class="label" for="f-aircraft">{d.contact.form.aircraft}</label><input class="field" id="f-aircraft" name="aircraft" placeholder="G650 / YV-XXXX" /></div>
+          <div><label class="label" for="f-service">{d.contact.form.service}</label>
+            <select class="field" id="f-service" name="service">{d.contact.form.services.map((s) => <option class="bg-void" value={s}>{s}</option>)}</select></div>
+          <div class="sm:col-span-2"><label class="label" for="f-message">{d.contact.form.message}</label><textarea class="field min-h-32" id="f-message" name="message" rows="4"></textarea></div>
+          <div class="flex flex-wrap items-center justify-between gap-4 sm:col-span-2">
+            <p class="max-w-xs text-xs text-steel">{d.contact.form.hint}</p>
+            <button type="submit" class="btn btn-primary">{d.contact.form.send}<Icon name="arrow" size={16} /></button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <Footer lang={lang} />
+
+  <script>
+    // Reloj UTC
+    const utc = document.querySelector('[data-utc]');
+    const tick = () => { if (utc) utc.textContent = new Date().toISOString().slice(11, 16); };
+    tick(); setInterval(tick, 15000);
+
+    // Formulario -> mailto
+    const form = document.getElementById('contact-form') as HTMLFormElement | null;
+    form?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const f = new FormData(form);
+      const lines = ['name', 'company', 'email', 'phone', 'aircraft', 'service']
+        .map((k) => `${(form.querySelector(`[name=${k}]`)?.previousElementSibling as HTMLElement)?.textContent}: ${f.get(k) ?? ''}`);
+      const body = `${lines.join('\n')}\n\n${f.get('message') ?? ''}`;
+      location.href = `mailto:${form.dataset.to}?subject=${encodeURIComponent(form.dataset.subject ?? '')}&body=${encodeURIComponent(body)}`;
+    });
+  </script>
+</Base>

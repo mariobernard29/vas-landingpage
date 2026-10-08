@@ -1,0 +1,57 @@
+---
+import '../styles/global.css';
+import { t, homePath, otherLang, type Lang } from '../i18n';
+import { SITE } from '../config';
+const { lang, title, description, path, otherPath } = Astro.props as { lang: Lang; title?: string; description?: string; path?: string; otherPath?: string };
+const d = t(lang);
+const other = otherLang(lang);
+const pageTitle = title ?? d.meta.title;
+const pageDesc = description ?? d.meta.description;
+const canonical = new URL(path ?? homePath(lang), SITE.url).href;
+const otherHref = new URL(otherPath ?? homePath(other), SITE.url).href;
+---
+<!doctype html>
+<html lang={lang} class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDesc} />
+    <meta name="theme-color" content="#0a0c10" />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang={lang} href={canonical} />
+    <link rel="alternate" hreflang={other} href={otherHref} />
+    <link rel="alternate" hreflang="x-default" href={new URL('/', SITE.url).href} />
+    <link rel="icon" type="image/png" href="/brand/icon-white.png" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDesc} />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content={new URL("/images/og.jpg", SITE.url).href} />
+    <meta property="og:locale" content={lang === 'es' ? 'es_VE' : 'en_US'} />
+    <script is:inline>document.documentElement.classList.remove('no-js');</script>
+  </head>
+  <body>
+    <div id="progress"></div>
+    <slot />
+    <script>
+      // Revelado al hacer scroll
+      const els = document.querySelectorAll('[data-reveal]');
+      const io = new IntersectionObserver(
+        (entries) => entries.forEach((e) => {
+          if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+        }),
+        { threshold: 0.12, rootMargin: '0px 0px -40px 0px' },
+      );
+      els.forEach((el) => io.observe(el));
+
+      // Barra de progreso de lectura
+      const bar = document.getElementById('progress')!;
+      const upd = () => {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        bar.style.transform = `scaleX(${max > 0 ? Math.min(scrollY / max, 1) : 0})`;
+      };
+      upd();
+      addEventListener('scroll', upd, { passive: true });
+    </script>
+  </body>
+</html>

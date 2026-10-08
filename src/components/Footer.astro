@@ -1,0 +1,84 @@
+---
+import Icon from './Icon';
+import { t, homePath, type Lang } from '../i18n';
+import { legalSlugs, legalLabels, type LegalKey } from '../i18n/legal';
+import { SITE } from '../config';
+
+const { lang } = Astro.props as { lang: Lang };
+const d = t(lang);
+const h = homePath(lang);
+const serviceLinks = [
+  [h + '#management', d.nav.management],
+  [h + '#fbo', d.nav.fbo],
+  [h + '#aog', d.nav.aog],
+  [h + '#permits', d.permits.eyebrow],
+];
+const companyLinks = [
+  [h + '#services', d.nav.services],
+  [h + '#network', d.nav.network],
+  [h + '#contact', d.nav.contact],
+];
+const legalKeys: LegalKey[] = ['privacy', 'terms', 'cookies'];
+---
+<footer class="border-t border-white/10 bg-black">
+  <div class="wrap py-16 md:py-20">
+    <div class="grid gap-12 lg:grid-cols-12">
+      <div class="lg:col-span-4">
+        <a href={h} aria-label="Vanguard Aero Services">
+          <img src="/brand/logo-horizontal-white.png" alt="Vanguard Aero Services" width="549" height="120" class="h-11 w-auto" loading="lazy" />
+        </a>
+        <p class="mt-6 max-w-sm text-sm leading-[22px] text-steel">{d.footer.tagline}</p>
+        <p class="eyebrow mt-8 mb-3 !text-[10px]">{d.footer.airports}</p>
+        <div class="flex gap-3">
+          {d.airports.list.map((a) => (
+            <span class="font-display rounded border border-white/15 px-4 py-2 text-sm font-bold tracking-[0.18em] text-white">{a.iata}</span>
+          ))}
+        </div>
+      </div>
+
+      <nav class="grid grid-cols-2 gap-10 sm:grid-cols-3 lg:col-span-5 lg:col-start-6" aria-label="Footer">
+        <div>
+          <p class="eyebrow mb-5 !text-white">{d.footer.cols.services}</p>
+          <ul class="space-y-3">
+            {serviceLinks.map(([href, label]) => (
+              <li><a href={href} class="text-sm text-steel transition-colors duration-500 hover:text-white">{label}</a></li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <p class="eyebrow mb-5 !text-white">{d.footer.cols.company}</p>
+          <ul class="space-y-3">
+            {companyLinks.map(([href, label]) => (
+              <li><a href={href} class="text-sm text-steel transition-colors duration-500 hover:text-white">{label}</a></li>
+            ))}
+          </ul>
+        </div>
+        <div class="col-span-2 sm:col-span-1">
+          <p class="eyebrow mb-5 !text-white">{d.footer.cols.legal}</p>
+          <ul class="space-y-3">
+            {legalKeys.map((k) => (
+              <li><a href={legalSlugs[lang][k]} class="text-sm text-steel transition-colors duration-500 hover:text-white">{legalLabels[lang][k]}</a></li>
+            ))}
+          </ul>
+        </div>
+      </nav>
+
+      <div class="lg:col-span-3">
+        <p class="eyebrow mb-5 !text-white">{d.contact.eyebrow}</p>
+        <ul class="space-y-4 text-sm text-steel">
+          <li class="flex items-center gap-3"><Icon name="clock" size={16} className="shrink-0" />{d.footer.hours}</li>
+          <li class="flex items-center gap-3"><Icon name="mail" size={16} className="shrink-0" /><a href={`mailto:${SITE.email}`} class="transition-colors duration-500 hover:text-white">{SITE.email}</a></li>
+          <li class="flex items-center gap-3"><Icon name="phone" size={16} className="shrink-0" /><a href={SITE.phoneHref} class="transition-colors duration-500 hover:text-white">{SITE.phone}</a></li>
+          <li class="flex items-start gap-3"><Icon name="pin" size={16} className="mt-1 shrink-0" />{d.contact.location}</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-16 flex flex-col items-start justify-between gap-4 border-t border-white/10 pt-8 text-xs text-slate md:flex-row md:items-center">
+      <p>© {new Date().getFullYear()} Vanguard Aero Services. {d.footer.rights}</p>
+      <a href="#top" class="font-display inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-steel transition-colors duration-500 hover:text-white">
+        {d.footer.top}<Icon name="down" size={14} className="rotate-180" />
+      </a>
+    </div>
+  </div>
+</footer>

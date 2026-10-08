@@ -1,0 +1,76 @@
+---
+import Icon from './Icon';
+import { t, homePath, otherLang, type Lang } from '../i18n';
+const { lang, otherPath } = Astro.props as { lang: Lang; otherPath?: string };
+const d = t(lang);
+const h = homePath(lang);
+const links = [
+  [h + '#services', d.nav.services],
+  [h + '#management', d.nav.management],
+  [h + '#fbo', d.nav.fbo],
+  [h + '#aog', d.nav.aog],
+  [h + '#network', d.nav.network],
+  [h + '#contact', d.nav.contact],
+];
+const other = otherLang(lang);
+---
+<header id="site-header" class="fixed inset-x-0 top-0 z-40 transition-all duration-700 ease-[cubic-bezier(.16,1,.3,1)]">
+  <div class="wrap flex h-20 items-center justify-between gap-6">
+    <a href={homePath(lang)} class="shrink-0" aria-label="Vanguard Aero Services">
+      <img src="/brand/logo-horizontal-white.png" alt="Vanguard Aero Services" width="549" height="120" class="h-9 w-auto md:h-10" />
+    </a>
+
+    <nav class="hidden items-center gap-8 xl:flex" aria-label="Principal">
+      {links.map(([href, label]) => (
+        <a href={href} class="font-display text-[11px] font-semibold uppercase tracking-[0.18em] text-steel transition-colors hover:text-white">{label}</a>
+      ))}
+    </nav>
+
+    <div class="flex items-center gap-3">
+      <a href={otherPath ?? homePath(other)} hreflang={other} aria-label={d.nav.langLabel}
+        class="font-display rounded border border-white/15 px-3 py-2 text-[11px] font-semibold tracking-[0.2em] text-white transition-colors hover:border-white/50">{d.nav.lang}</a>
+      <a href={h + '#contact'} class="btn btn-primary hidden !py-2.5 md:inline-flex">{d.nav.cta}</a>
+      <button id="menu-btn" class="text-white xl:hidden" aria-label={d.nav.menu} aria-expanded="false" aria-controls="mobile-menu">
+        <Icon name="menu" size={26} />
+      </button>
+    </div>
+  </div>
+
+  <div id="mobile-menu" class="hidden border-t border-white/10 bg-void xl:hidden">
+    <nav class="wrap flex flex-col py-4" aria-label="Mobile">
+      {links.map(([href, label]) => (
+        <a href={href} class="font-display border-b border-white/5 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-platinum">{label}</a>
+      ))}
+      <a href={h + '#contact'} class="btn btn-primary mt-5">{d.nav.cta}</a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const header = document.getElementById('site-header')!;
+  const btn = document.getElementById('menu-btn')!;
+  const menu = document.getElementById('mobile-menu')!;
+  let last = 0;
+  const onScroll = () => {
+    const y = window.scrollY;
+    const solid = y > 24;
+    header.classList.toggle('bg-void/95', solid);
+    header.classList.toggle('border-b', solid);
+    header.classList.toggle('border-white/10', solid);
+    // se oculta al bajar y reaparece al subir
+    const hide = y > 400 && y > last && menu.classList.contains('hidden');
+    header.style.transform = hide ? 'translateY(-100%)' : 'none';
+    last = y;
+  };
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+  btn.addEventListener('click', () => {
+    const open = menu.classList.toggle('hidden') === false;
+    btn.setAttribute('aria-expanded', String(open));
+    header.classList.toggle('bg-void', open);
+  });
+  menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => {
+    menu.classList.add('hidden');
+    btn.setAttribute('aria-expanded', 'false');
+  }));
+</script>
