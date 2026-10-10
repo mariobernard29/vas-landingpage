@@ -60,6 +60,7 @@
   .btn-dark { @apply bg-ink text-white hover:bg-accent; }
   .btn-line { @apply border border-white/40 text-white hover:border-white hover:bg-white/10; }
   .btn-line-dark { @apply border border-ink/25 text-ink hover:border-ink; }
+  .btn-wa { @apply bg-[#1f8f4e] text-white hover:bg-[#177a41]; }
   .btn .arr { transition: transform .25s var(--ease-out-soft); }
   .btn:hover .arr { transform: translateX(3px); }
 

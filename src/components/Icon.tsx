@@ -1,7 +1,7 @@
-import { ArrowRight, ArrowUp, Menu, X, Plus, ChevronDown, ArrowUpRight } from 'lucide-react';
+import { ArrowRight, ArrowUp, Menu, X, Plus, ChevronDown, ArrowUpRight, Mail } from 'lucide-react';
 
 // Solo iconos funcionales (navegación y acciones); nada decorativo.
-const icons = { arrow: ArrowRight, up: ArrowUp, menu: Menu, close: X, plus: Plus, down: ChevronDown, out: ArrowUpRight } as const;
+const icons = { arrow: ArrowRight, up: ArrowUp, menu: Menu, close: X, plus: Plus, down: ChevronDown, out: ArrowUpRight, mail: Mail } as const;
 
 export type IconName = keyof typeof icons;
 

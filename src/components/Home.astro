@@ -334,7 +334,7 @@ const mgmtService = d.serviceTypes[0];
         </div>
 
         <div class="lg:col-span-7 lg:col-start-6">
-          <form id="contact-form" class="border border-stone bg-white p-5 sm:p-8 lg:p-10" data-to={SITE.email} data-subject={d.contact.form.subject}>
+          <form id="contact-form" class="border border-stone bg-white p-5 sm:p-8 lg:p-10" data-to={SITE.email} data-wa={SITE.whatsapp} data-subject={d.contact.form.subject} data-greeting={d.contact.form.greeting}>
             <div class="flex flex-wrap items-center justify-between gap-3 border-b border-stone pb-6">
               <p class="text-[18px] font-medium">{d.contact.form.legend}</p>
               <p class="flex items-center gap-2 text-[13px] text-steel"><span class="h-1.5 w-1.5 rounded-full bg-ok"></span>{d.contact.response}</p>
@@ -354,9 +354,15 @@ const mgmtService = d.serviceTypes[0];
               <div class="sm:col-span-2"><label class="f-label" for="f-message">{d.contact.form.message}</label><textarea class="field min-h-36" id="f-message" name="message" rows="5" placeholder={d.contact.form.messagePh}></textarea></div>
             </div>
 
-            <div class="mt-8 flex flex-col-reverse gap-5 border-t border-stone pt-6 sm:flex-row sm:items-center sm:justify-between">
+            <div class="mt-8 flex flex-col-reverse gap-5 border-t border-stone pt-6 xl:flex-row xl:items-center xl:justify-between">
               <p class="max-w-xs text-[13px] leading-[1.5] text-steel">{d.contact.form.hint}</p>
-              <button type="submit" class="btn btn-dark">{d.contact.form.send}<Icon name="arrow" className="arr" /></button>
+              <div class="flex flex-col gap-3 sm:flex-row">
+                <button type="submit" name="via" value="whatsapp" class="btn btn-wa">
+                  <svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.21 3.07.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.7.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35M12.05 21.5h-.01a9.4 9.4 0 0 1-4.8-1.32l-.34-.2-3.56.94.95-3.48-.23-.36a9.43 9.43 0 0 1-1.44-5.02c0-5.2 4.24-9.44 9.45-9.44 2.52 0 4.89.99 6.67 2.77a9.38 9.38 0 0 1 2.76 6.68c0 5.21-4.24 9.44-9.45 9.44m8.04-17.48A11.3 11.3 0 0 0 12.05.69C5.78.69.68 5.79.68 12.06c0 2 .52 3.96 1.52 5.68L.58 23.31l5.7-1.5a11.33 11.33 0 0 0 5.77 1.47h.01c6.26 0 11.36-5.1 11.37-11.37a11.3 11.3 0 0 0-3.34-8.04"/></svg>
+                  {d.contact.form.sendWhatsapp}
+                </button>
+                <button type="submit" name="via" value="email" class="btn btn-line-dark"><Icon name="mail" size={17} />{d.contact.form.sendEmail}</button>
+              </div>
             </div>
           </form>
         </div>
@@ -394,18 +400,30 @@ const mgmtService = d.serviceTypes[0];
       if (sel) sel.value = a.dataset.prefillService!;
     }));
 
-    // Formulario -> mailto
+    // Formulario -> WhatsApp o email, con el mensaje ya redactado
     form?.addEventListener('submit', (e) => {
       e.preventDefault();
+      const via = ((e as SubmitEvent).submitter as HTMLButtonElement | null)?.value === 'email' ? 'email' : 'whatsapp';
+      const wa = via === 'whatsapp';
       const f = new FormData(form);
-      const lines = ['name', 'company', 'email', 'phone', 'aircraft', 'airport', 'date', 'service'].map((k) => {
+      const lines = ['name', 'company', 'email', 'phone', 'aircraft', 'airport', 'date', 'service'].flatMap((k) => {
         const el = form.querySelector<HTMLInputElement | HTMLSelectElement>(`[name=${k}]`)!;
         const label = form.querySelector(`label[for=${el.id}]`)?.firstChild?.textContent?.trim();
-        const v = el instanceof HTMLSelectElement ? el.selectedOptions[0]?.text : String(f.get(k) ?? '');
-        return `${label}: ${v}`;
+        const v = (el instanceof HTMLSelectElement ? el.selectedOptions[0]?.text : String(f.get(k) ?? '')).trim();
+        return v ? [wa ? `*${label}:* ${v}` : `${label}: ${v}`] : [];
       });
-      const body = `${lines.join('\n')}\n\n${f.get('message') ?? ''}`;
-      location.href = `mailto:${form.dataset.to}?subject=${encodeURIComponent(form.dataset.subject ?? '')}&body=${encodeURIComponent(body)}`;
+      const msg = String(f.get('message') ?? '').trim();
+      const subject = form.dataset.subject ?? '';
+      const body = [form.dataset.greeting, '', ...lines, ...(msg ? ['', msg] : [])].join('\n');
+      if (wa) {
+        const url = `https://wa.me/${form.dataset.wa}?text=${encodeURIComponent(`*${subject}*\n\n${body}`)}`;
+        // window.open con 'noopener' siempre devuelve null, así que se corta el opener a mano
+        const w = window.open(url, '_blank');
+        if (w) w.opener = null;
+        else location.href = url;
+      } else {
+        location.href = `mailto:${form.dataset.to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      }
     });
 
     // Un solo socio: la foto y el pie cambian según el servicio
