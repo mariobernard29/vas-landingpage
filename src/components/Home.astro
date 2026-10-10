@@ -7,6 +7,7 @@ import Icon from './Icon';
 import GlobeNetwork from './GlobeNetwork';
 import { t, type Lang } from '../i18n';
 import { SITE } from '../config';
+import { homeJsonLd } from '../seo';
 
 const { lang } = Astro.props as { lang: Lang };
 const d = t(lang);
@@ -14,7 +15,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
 const aogService = d.serviceTypes[6];
 const mgmtService = d.serviceTypes[0];
 ---
-<Base lang={lang}>
+<Base lang={lang} jsonLd={homeJsonLd(lang)}>
   <Header lang={lang} />
 
   <main id="main">

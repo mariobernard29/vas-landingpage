@@ -2,9 +2,9 @@ import type { Dict } from './es';
 
 export const en: Dict = {
   meta: {
-    title: 'Vanguard Aero Services | Business aviation services in Venezuela',
+    title: 'Venezuela Ground Handling, FBO & 24/7 AOG (CCS · PMV) | Vanguard Aero Services',
     description:
-      'Aircraft management, FBO and handling, 24/7 AOG support and permits for private aviation in Caracas (CCS) and Margarita Island (PMV), Venezuela.',
+      'Executive ground handling, FBO, aircraft management, 24/7 AOG support and landing permits for private jets in Caracas (SVMI/CCS) and Margarita Island (SVMG/PMV), Venezuela.',
   },
   nav: {
     services: 'Services',

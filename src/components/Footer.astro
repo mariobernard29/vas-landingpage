@@ -1,5 +1,6 @@
 ---
 import Icon from './Icon';
+import LangSwitch from './LangSwitch.astro';
 import { t, homePath, otherLang, type Lang } from '../i18n';
 import { legalSlugs, legalLabels } from '../i18n/legal';
 import { SITE } from '../config';
@@ -53,9 +54,7 @@ const cols = [
     <div class="mt-16 flex flex-col gap-6 border-t border-white/12 pt-8 text-[13px] text-mist md:flex-row md:items-center md:justify-between">
       <p>© {new Date().getFullYear()} Vanguard Aero Services. {f.rights}</p>
       <div class="flex items-center gap-8">
-        <p class="tracking-[0.04em]">
-          <span class="font-semibold text-white">{lang.toUpperCase()}</span><span class="mx-1">/</span><a href={otherPath ?? homePath(other)} hreflang={other} class="ulink" aria-label={d.nav.langLabel}>{other.toUpperCase()}</a>
-        </p>
+        <LangSwitch lang={lang} otherPath={otherPath ?? homePath(other)} class="text-white" />
         <a href="#top" class="inline-flex items-center gap-2 ulink">{f.top}<Icon name="up" size={14} /></a>
       </div>
     </div>

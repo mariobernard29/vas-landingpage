@@ -1,5 +1,6 @@
 ---
 import Icon from './Icon';
+import LangSwitch from './LangSwitch.astro';
 import { t, homePath, otherLang, type Lang } from '../i18n';
 import { SITE } from '../config';
 const { lang, otherPath, solid = false } = Astro.props as { lang: Lang; otherPath?: string; solid?: boolean };
@@ -33,11 +34,7 @@ const links = [
     </nav>
 
     <div class="ml-auto flex items-center gap-5">
-      <p class="hidden text-[13px] tracking-[0.04em] sm:block">
-        <span aria-current="true" class="font-semibold">{lang.toUpperCase()}</span>
-        <span class="dim mx-1">/</span>
-        <a href={otherHref} hreflang={other} aria-label={d.nav.langLabel} class="dim ulink hover:opacity-100">{other.toUpperCase()}</a>
-      </p>
+      <div class="hidden sm:block"><LangSwitch lang={lang} otherPath={otherHref} /></div>
       <a href={h + '#contact'} class="btn hcta hidden !h-10 !px-5 !text-[13px] md:inline-flex lg:hidden xl:inline-flex">{d.nav.cta}</a>
       <button id="menu-btn" type="button" class="-mr-2 p-2 lg:hidden" aria-label={d.nav.menu} data-open-label={d.nav.menu} data-close-label={d.nav.close} aria-expanded="false" aria-controls="mobile-menu">
         <span class="i-open"><Icon name="menu" size={24} /></span>
@@ -89,9 +86,7 @@ const links = [
             <p class="kicker">{d.nav.menuContact}</p>
             <a href={SITE.phoneHref} class="mt-1 block font-medium">{SITE.phone}</a>
           </div>
-          <p class="text-[14px] tracking-[0.04em]">
-            <span class="font-semibold">{lang.toUpperCase()}</span><span class="mx-1 text-steel">/</span><a href={otherHref} hreflang={other} class="text-steel">{other.toUpperCase()}</a>
-          </p>
+          <LangSwitch lang={lang} otherPath={otherHref} />
         </div>
       </div>
     </nav>

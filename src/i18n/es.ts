@@ -1,8 +1,8 @@
 export const es = {
   meta: {
-    title: 'Vanguard Aero Services | Servicios para aviación ejecutiva en Venezuela',
+    title: 'Handling, FBO y AOG 24/7 en Venezuela (CCS · PMV) | Vanguard Aero Services',
     description:
-      'Gestión de aeronaves, FBO y handling, soporte AOG 24/7 y permisos para aviación privada en Caracas (CCS) y la Isla de Margarita (PMV), Venezuela.',
+      'Handling ejecutivo, FBO, gestión de aeronaves, soporte AOG 24/7 y permisos INAC para aviación privada en Maiquetía (SVMI/CCS) e Isla de Margarita (SVMG/PMV), Venezuela.',
   },
   nav: {
     services: 'Servicios',

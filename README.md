@@ -12,7 +12,7 @@ npm run preview
 ## Dónde editar
 
 - **Textos ES/EN:** `src/i18n/es.ts` y `src/i18n/en.ts` (misma estructura; TypeScript avisa si falta algo).
-- **Datos de contacto:** `src/config.ts` (⚠️ el teléfono sigue siendo un valor de ejemplo).
+- **Datos de contacto:** `src/config.ts`.
 - **Secciones y maquetación:** `src/components/Home.astro` (hero, solicitud rápida, servicios, un solo socio, AOG, permisos, destinos, nosotros + red, contacto).
 - **Header / footer:** `src/components/Header.astro`, `src/components/Footer.astro`.
 - **Globo animado:** `src/components/GlobeNetwork.tsx` (globe.gl + three.js, carga diferida al hacer scroll).

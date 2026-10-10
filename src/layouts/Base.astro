@@ -2,13 +2,19 @@
 import '../styles/global.css';
 import { t, homePath, otherLang, type Lang } from '../i18n';
 import { SITE } from '../config';
-const { lang, title, description, path, otherPath } = Astro.props as { lang: Lang; title?: string; description?: string; path?: string; otherPath?: string };
+const { lang, title, description, path, otherPath, jsonLd } = Astro.props as {
+  lang: Lang; title?: string; description?: string; path?: string; otherPath?: string; jsonLd?: object;
+};
 const d = t(lang);
 const other = otherLang(lang);
 const pageTitle = title ?? d.meta.title;
 const pageDesc = description ?? d.meta.description;
 const canonical = new URL(path ?? homePath(lang), SITE.url).href;
 const otherHref = new URL(otherPath ?? homePath(other), SITE.url).href;
+// x-default: la versión en español de esta misma página
+const esHref = lang === 'es' ? canonical : otherHref;
+const ogImage = new URL('/images/og.jpg', SITE.url).href;
+const locale = { es: 'es_VE', en: 'en_US' } as const;
 ---
 <!doctype html>
 <html lang={lang} class="no-js">
@@ -17,17 +23,36 @@ const otherHref = new URL(otherPath ?? homePath(other), SITE.url).href;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{pageTitle}</title>
     <meta name="description" content={pageDesc} />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
     <meta name="theme-color" content="#111418" />
     <link rel="canonical" href={canonical} />
     <link rel="alternate" hreflang={lang} href={canonical} />
     <link rel="alternate" hreflang={other} href={otherHref} />
-    <link rel="alternate" hreflang="x-default" href={new URL('/', SITE.url).href} />
-    <link rel="icon" type="image/png" href="/brand/icon-white.png" />
+    <link rel="alternate" hreflang="x-default" href={esHref} />
+    <link rel="sitemap" href="/sitemap.xml" />
+
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <meta property="og:site_name" content={SITE.name} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={pageDesc} />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content={new URL("/images/og.jpg", SITE.url).href} />
-    <meta property="og:locale" content={lang === 'es' ? 'es_VE' : 'en_US'} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={SITE.name} />
+    <meta property="og:locale" content={locale[lang]} />
+    <meta property="og:locale:alternate" content={locale[other]} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={pageDesc} />
+    <meta name="twitter:image" content={ogImage} />
+
+    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
     <script is:inline>document.documentElement.classList.remove('no-js');</script>
   </head>
   <body id="top">
