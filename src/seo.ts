@@ -14,7 +14,9 @@ export const homeJsonLd = (lang: Lang) => {
         '@type': 'LocalBusiness',
         '@id': orgId,
         name: SITE.name,
+        alternateName: 'Vanguard Aero',
         legalName: 'Vanguard Aero Services, C.A.',
+        sameAs: [SITE.instagram],
         url: SITE.url,
         logo: new URL('/icon-512.png', SITE.url).href,
         image: new URL('/images/og.jpg', SITE.url).href,
@@ -76,6 +78,18 @@ export const homeJsonLd = (lang: Lang) => {
         inLanguage: lang,
         isPartOf: { '@id': `${SITE.url}/#website` },
         about: { '@id': orgId },
+        primaryImageOfPage: new URL('/images/og.jpg', SITE.url).href,
+      },
+      {
+        '@type': 'FAQPage',
+        '@id': `${url}#faq`,
+        inLanguage: lang,
+        isPartOf: { '@id': `${url}#webpage` },
+        mainEntity: d.faq.items.map((f) => ({
+          '@type': 'Question',
+          name: f.q,
+          acceptedAnswer: { '@type': 'Answer', text: f.a },
+        })),
       },
     ],
   };

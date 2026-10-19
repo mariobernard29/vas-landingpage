@@ -2,7 +2,8 @@ export const es = {
   meta: {
     title: 'Handling, FBO y AOG 24/7 en Venezuela (CCS · PMV) | Vanguard Aero Services',
     description:
-      'Handling ejecutivo, FBO, gestión de aeronaves, soporte AOG 24/7 y permisos INAC para aviación privada en Maiquetía (SVMI/CCS) e Isla de Margarita (SVMG/PMV), Venezuela.',
+      'Handling ejecutivo, FBO, gestión de aeronaves, AOG 24/7 y permisos INAC para aviación privada en Maiquetía (CCS) e Isla de Margarita (PMV), Venezuela.',
+    ogAlt: 'Jet ejecutivo en plataforma: handling y FBO para aviación privada en Venezuela',
   },
   nav: {
     services: 'Servicios',
@@ -26,7 +27,7 @@ export const es = {
   },
   hero: {
     eyebrow: 'Aviación privada · Venezuela',
-    title: 'Excelencia operacional para la aviación privada',
+    title: 'Excelencia operacional para la aviación privada en Venezuela',
     text: 'Coordinamos cada detalle de su operación en Venezuela, desde tierra hasta el despegue.',
     cta1: 'Solicitar servicio',
     cta2: 'Operaciones 24/7',
@@ -175,6 +176,7 @@ export const es = {
       { k: 'loc', l: 'Ubicación', v: 'Caracas (CCS) e Isla de Margarita (PMV), Venezuela' },
       { k: 'lang', l: 'Idiomas', v: 'Español · English' },
       { k: 'tz', l: 'Zona horaria', v: 'Hora de Venezuela (VET, UTC−4)' },
+      { k: 'ig', l: 'Instagram' },
     ],
     form: {
       legend: 'Datos de la operación',
@@ -196,6 +198,19 @@ export const es = {
       greeting: 'Hola, Vanguard Aero Services. Quisiera solicitar asistencia para la siguiente operación:',
       subject: 'Solicitud de servicio',
     },
+  },
+  faq: {
+    eyebrow: 'Preguntas frecuentes',
+    title: 'Lo que suelen preguntarnos antes de volar a Venezuela',
+    items: [
+      { q: '¿En qué aeropuertos de Venezuela operan?', a: 'Operamos en el Aeropuerto Internacional Simón Bolívar de Maiquetía (CCS / SVMI), que sirve a Caracas, y en el Aeropuerto Internacional del Caribe Santiago Mariño (PMV / SVMG), en la Isla de Margarita. Para otros aeropuertos del país, consúltenos.' },
+      { q: '¿Qué permisos necesita un vuelo privado para aterrizar en Venezuela?', a: 'Las operaciones no regulares requieren permiso de aterrizaje o sobrevuelo del INAC, además del despacho migratorio ante el SAIME y aduanero ante el SENIAT. Preparamos la documentación y coordinamos estos trámites por usted.' },
+      { q: '¿Con cuánta antelación debo solicitar el servicio?', a: 'Los plazos dependen del tipo de operación y de cada autoridad. Le recomendamos contactarnos en cuanto tenga la fecha prevista: le confirmamos requisitos, documentos y tiempos para su caso.' },
+      { q: '¿Qué hago si mi aeronave queda en tierra (AOG)?', a: 'Llame a nuestra línea de operaciones 24/7. Evaluamos la falla con la tripulación, movilizamos técnicos y repuestos, gestionamos los permisos de importación y le mantenemos informado hasta el retorno al servicio.' },
+      { q: '¿Qué incluye el servicio de FBO y handling?', a: 'Atención en plataforma, combustible, catering, transporte terrestre, hospedaje para pasajeros y tripulación, concierge y cualquier otro requerimiento de su escala, coordinado por un único interlocutor.' },
+      { q: '¿Atienden en inglés?', a: 'Sí. Nuestro centro de operaciones atiende 24/7 en español e inglés a propietarios, operadores y tripulaciones de cualquier país.' },
+      { q: '¿Cómo solicito un servicio?', a: 'Complete el formulario de contacto y envíelo por WhatsApp o por email, o llámenos directamente. Un coordinador le responderá con disponibilidad y próximos pasos.' },
+    ],
   },
   footer: {
     tagline: 'Gestión de aeronaves, FBO, soporte AOG y permisos para la aviación privada en Venezuela.',

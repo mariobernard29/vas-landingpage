@@ -4,7 +4,8 @@ export const en: Dict = {
   meta: {
     title: 'Venezuela Ground Handling, FBO & 24/7 AOG (CCS · PMV) | Vanguard Aero Services',
     description:
-      'Executive ground handling, FBO, aircraft management, 24/7 AOG support and landing permits for private jets in Caracas (SVMI/CCS) and Margarita Island (SVMG/PMV), Venezuela.',
+      'Ground handling, FBO, aircraft management, 24/7 AOG and landing permits for private jets in Caracas (CCS) and Margarita Island (PMV), Venezuela.',
+    ogAlt: 'Business jet on the ramp: ground handling and FBO for private aviation in Venezuela',
   },
   nav: {
     services: 'Services',
@@ -28,7 +29,7 @@ export const en: Dict = {
   },
   hero: {
     eyebrow: 'Private aviation · Venezuela',
-    title: 'Operational excellence for private aviation',
+    title: 'Operational excellence for private aviation in Venezuela',
     text: 'We coordinate every detail of your operation in Venezuela, from the ground to departure.',
     cta1: 'Request service',
     cta2: '24/7 Operations',
@@ -177,6 +178,7 @@ export const en: Dict = {
       { k: 'loc', l: 'Location', v: 'Caracas (CCS) and Margarita Island (PMV), Venezuela' },
       { k: 'lang', l: 'Languages', v: 'Español · English' },
       { k: 'tz', l: 'Time zone', v: 'Venezuela time (VET, UTC−4)' },
+      { k: 'ig', l: 'Instagram' },
     ],
     form: {
       legend: 'Operation details',
@@ -198,6 +200,19 @@ export const en: Dict = {
       greeting: 'Hello Vanguard Aero Services, I would like to request assistance for the following operation:',
       subject: 'Service request',
     },
+  },
+  faq: {
+    eyebrow: 'FAQ',
+    title: 'What operators ask us before flying to Venezuela',
+    items: [
+      { q: 'Which airports in Venezuela do you operate at?', a: 'We operate at Simón Bolívar International Airport in Maiquetía (CCS / SVMI), serving Caracas, and at Santiago Mariño Caribbean International Airport (PMV / SVMG) on Margarita Island. For other airports in the country, contact us.' },
+      { q: 'What permits does a private flight need to land in Venezuela?', a: 'Non-scheduled operations require a landing or overflight permit from INAC, plus immigration clearance with SAIME and customs clearance with SENIAT. We prepare the documents and handle these procedures for you.' },
+      { q: 'How far in advance should I request service?', a: 'Lead times depend on the type of operation and on each authority. Contact us as soon as you have a planned date and we will confirm the requirements, documents and timing for your case.' },
+      { q: 'What should I do if my aircraft is grounded (AOG)?', a: 'Call our 24/7 operations line. We assess the fault with the crew, mobilize technicians and parts, handle import permits and keep you informed until the aircraft returns to service.' },
+      { q: 'What does your FBO and ground handling service include?', a: 'Ramp handling, fuel, catering, ground transportation, hotel accommodation for passengers and crew, concierge and any other request for your stop, coordinated by a single point of contact.' },
+      { q: 'Do you provide service in English?', a: 'Yes. Our operations center works 24/7 in English and Spanish with owners, operators and crews from any country.' },
+      { q: 'How do I request a service?', a: 'Fill in the contact form and send it via WhatsApp or email, or call us directly. A coordinator will reply with availability and next steps.' },
+    ],
   },
   footer: {
     tagline: 'Aircraft management, FBO, AOG support and permits for private aviation in Venezuela.',

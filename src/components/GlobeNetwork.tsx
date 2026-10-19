@@ -26,25 +26,16 @@ export default function GlobeNetwork({ cities, hub }: { cities: Cities; hub: str
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     const start = async () => {
-      const [{ default: Globe }, THREE, topo, { feature }, { geoContains }] = await Promise.all([
+      const [{ default: Globe }, THREE, { default: flat }] = await Promise.all([
         import('globe.gl'),
         import('three'),
-        import('world-atlas/land-110m.json'),
-        import('topojson-client'),
-        import('d3-geo'),
+        import('../globe-dots.json'),
       ]);
       if (disposed) return;
-      const land = feature(topo.default as any, (topo.default as any).objects.land) as any;
 
-      // Malla de puntos sobre tierra firme (espaciado uniforme en superficie)
+      // Malla de puntos sobre tierra firme, precalculada con scripts/globe-dots.mjs
       const dots: any[] = [];
-      const step = 2.1;
-      for (let lat = -56; lat <= 80; lat += step) {
-        const k = step / Math.max(Math.cos((lat * Math.PI) / 180), 0.2);
-        for (let lng = -180; lng < 180; lng += k) {
-          if (geoContains(land, [lng, lat])) dots.push({ lat, lng, kind: 'land' });
-        }
-      }
+      for (let i = 0; i < flat.length; i += 2) dots.push({ lat: flat[i], lng: flat[i + 1], kind: 'land' });
 
       const arcs = ORIGINS.map((o, i) => ({
         startLat: o.lat, startLng: o.lng, endLat: CCS.lat, endLng: CCS.lng, delay: i * 420,
@@ -110,7 +101,7 @@ export default function GlobeNetwork({ cities, hub }: { cities: Cities; hub: str
       setReady(true);
     };
 
-    // Carga diferida: solo cuando el globo entra en pantalla.
+    // Carga diferida, con margen amplio para que el globo esté listo al llegar a él.
     io = new IntersectionObserver(
       (entries) => {
         if (entries.some((e) => e.isIntersecting)) {
@@ -118,7 +109,7 @@ export default function GlobeNetwork({ cities, hub }: { cities: Cities; hub: str
           start();
         }
       },
-      { rootMargin: '200px' },
+      { rootMargin: '1200px 0px' },
     );
     io.observe(el);
 
@@ -141,11 +132,13 @@ export default function GlobeNetwork({ cities, hub }: { cities: Cities; hub: str
         aria-label="Interactive globe showing routes to Caracas"
         role="img"
       />
-      {!ready && (
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="h-3/4 w-3/4 animate-pulse rounded-full bg-white/5" />
-        </div>
-      )}
+      {/* Silueta del globo mientras carga, en el mismo lugar: nada se mueve debajo */}
+      <div
+        aria-hidden="true"
+        className={`pointer-events-none absolute inset-0 flex items-center justify-center transition-opacity duration-1000 ${ready ? 'opacity-0' : 'opacity-100'}`}
+      >
+        <div className="aspect-square w-[68%] rounded-full bg-[radial-gradient(circle_at_35%_30%,#1d232b,#111418_70%)] shadow-[0_0_60px_6px_rgba(159,179,207,0.12)]" />
+      </div>
     </div>
   );
 }

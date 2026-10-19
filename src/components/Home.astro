@@ -302,12 +302,33 @@ const mgmtService = d.serviceTypes[0];
         </div>
         <div id="network" class="lg:col-span-6 lg:col-start-7">
           <div class="mx-auto max-w-[560px]">
-            <GlobeNetwork client:only="react" cities={d.about.network.cities} hub={d.about.network.hub} />
+            <GlobeNetwork client:idle cities={d.about.network.cities} hub={d.about.network.hub} />
           </div>
           <div class="mt-8 grid gap-3 border-t border-white/15 pt-6 sm:grid-cols-[1fr_1.3fr] sm:gap-8">
             <p class="text-[18px] leading-snug">{d.about.network.title}</p>
             <p class="text-[14px] leading-[1.6] text-mist">{d.about.network.text}</p>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PREGUNTAS FRECUENTES -->
+    <section id="faq" class="bg-white py-20 lg:py-32">
+      <div class="wrap grid gap-12 lg:grid-cols-12 lg:gap-10">
+        <div class="lg:col-span-4" data-reveal>
+          <p class="kicker">{d.faq.eyebrow}</p>
+          <h2 class="h-section mt-4">{d.faq.title}</h2>
+        </div>
+        <div class="border-t border-ink/80 lg:col-span-7 lg:col-start-6">
+          {d.faq.items.map((f, i) => (
+            <details class="border-b border-stone" open={i === 0}>
+              <summary class="flex items-center gap-6 py-5">
+                <h3 class="flex-1 text-[17px] leading-snug font-normal">{f.q}</h3>
+                <span class="plus shrink-0 text-steel"><Icon name="plus" size={18} /></span>
+              </summary>
+              <p class="max-w-[620px] pb-6 text-[15px] leading-[1.65] text-steel">{f.a}</p>
+            </details>
+          ))}
         </div>
       </div>
     </section>
@@ -326,6 +347,7 @@ const mgmtService = d.serviceTypes[0];
                 <dd>
                   {r.k === 'email' ? <a href={`mailto:${SITE.email}`} class="ulink">{SITE.email}</a>
                     : r.k === 'phone' ? <a href={SITE.phoneHref} class="ulink">{SITE.phone}</a>
+                    : r.k === 'ig' ? <a href={SITE.instagram} target="_blank" rel="noopener me" class="inline-flex items-center gap-2 ulink"><Icon name="instagram" size={16} />{SITE.instagramHandle}</a>
                     : r.v}
                 </dd>
               </div>

@@ -5,4 +5,6 @@ export const SITE = {
   phone: '+58 424 166 4874',
   phoneHref: 'tel:+584241664874',
   whatsapp: '584241664874',
+  instagram: 'https://www.instagram.com/vanguard_aeroservices/',
+  instagramHandle: '@vanguard_aeroservices',
 };
