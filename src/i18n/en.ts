@@ -2,9 +2,9 @@ import type { Dict } from './es';
 
 export const en: Dict = {
   meta: {
-    title: 'Venezuela Ground Handling, FBO & 24/7 AOG (CCS · PMV) | Vanguard Aero Services',
+    title: 'Venezuela Ground Handling, FBO & 24/7 AOG (CCS · Maiquetía) | Vanguard Aero Services',
     description:
-      'Ground handling, FBO, aircraft management, 24/7 AOG and landing permits for private jets in Caracas (CCS) and Margarita Island (PMV), Venezuela.',
+      'Ground handling, FBO, aircraft management, 24/7 AOG and landing permits for private jets in Caracas (CCS · Maiquetía), Venezuela.',
     ogAlt: 'Business jet on the ramp: ground handling and FBO for private aviation in Venezuela',
   },
   nav: {
@@ -33,7 +33,7 @@ export const en: Dict = {
     text: 'We coordinate every detail of your operation in Venezuela, from the ground to departure.',
     cta1: 'Request service',
     cta2: '24/7 Operations',
-    meta: ['CCS · PMV', '24/7 Operations', 'Private Aviation'],
+    meta: ['CCS · Caracas', '24/7 Operations', 'Private Aviation'],
     alt: 'Business jet parked on the ramp at sunset',
   },
   request: {
@@ -46,7 +46,6 @@ export const en: Dict = {
   },
   airports: [
     { v: 'CCS', l: 'CCS · Caracas, Maiquetía' },
-    { v: 'PMV', l: 'PMV · Margarita Island' },
     { v: 'OTRO', l: 'Other airport' },
   ],
   serviceTypes: [
@@ -125,7 +124,7 @@ export const en: Dict = {
       { auth: 'INAC', name: 'National Institute of Civil Aeronautics', d: 'Landing, overflight and non-scheduled operation permits.' },
       { auth: 'SAIME', name: 'Identification, Migration and Immigration Service', d: 'Coordination of immigration clearance for passengers and crew.' },
       { auth: 'SENIAT', name: 'National Customs and Tax Administration Service', d: 'Coordination of customs procedures for aircraft, baggage and cargo.' },
-      { auth: 'CCS · PMV', name: 'Airport operators', d: 'Parking, slots and coordination with the airport and its services.' },
+      { auth: 'CCS · SVMI', name: 'Airport operators', d: 'Parking, slots and coordination with the airport and its services.' },
     ],
     note: 'Vanguard Aero Services handles paperwork on behalf of its clients. Requirements and lead times vary by type of operation: contact us in advance to confirm them.',
     alt: 'International flight plan form and aircraft model on a table',
@@ -133,12 +132,11 @@ export const en: Dict = {
   },
   destinations: {
     eyebrow: 'Destinations',
-    title: 'Caracas and Margarita Island',
-    text: 'We operate at the two main business aviation destinations in Venezuela.',
+    title: 'Caracas',
+    text: 'We operate at Simón Bolívar International Airport in Maiquetía, the main gateway for business aviation into Venezuela.',
     cta: 'View services',
     list: [
       { city: 'Caracas', code: 'CCS · Maiquetía', icao: 'SVMI', airport: 'Simón Bolívar International Airport', desc: 'Gateway to the capital and the country’s main business hub.', img: 'caracas', alt: 'Caracas at dusk with El Ávila mountain behind' },
-      { city: 'Margarita Island', code: 'PMV · Santiago Mariño', icao: 'SVMG', airport: 'Santiago Mariño Caribbean International Airport', desc: 'The Venezuelan Caribbean’s main tourist destination.', img: 'margarita', alt: 'Palm-lined beach on Margarita Island' },
     ],
     table: {
       caption: 'Operating information',
@@ -151,7 +149,7 @@ export const en: Dict = {
     eyebrow: 'About',
     title: 'Business aviation services in Venezuela',
     paragraphs: [
-      'Vanguard Aero Services coordinates the ground operation of private and corporate aircraft in Caracas and Margarita Island.',
+      'Vanguard Aero Services coordinates the ground operation of private and corporate aircraft in Caracas (Maiquetía).',
       'We work for owners, operators and crews who need a reliable local counterpart: a team that knows the airports, the authorities and the suppliers, and answers at any hour.',
     ],
     principles: [
@@ -175,7 +173,7 @@ export const en: Dict = {
       { k: 'ops', l: 'Operations center', v: 'Available 24/7' },
       { k: 'email', l: 'Email' },
       { k: 'phone', l: 'Phone' },
-      { k: 'loc', l: 'Location', v: 'Caracas (CCS) and Margarita Island (PMV), Venezuela' },
+      { k: 'loc', l: 'Location', v: 'Caracas (CCS · Maiquetía), Venezuela' },
       { k: 'lang', l: 'Languages', v: 'Español · English' },
       { k: 'tz', l: 'Time zone', v: 'Venezuela time (VET, UTC−4)' },
       { k: 'ig', l: 'Instagram' },
@@ -205,7 +203,7 @@ export const en: Dict = {
     eyebrow: 'FAQ',
     title: 'What operators ask us before flying to Venezuela',
     items: [
-      { q: 'Which airports in Venezuela do you operate at?', a: 'We operate at Simón Bolívar International Airport in Maiquetía (CCS / SVMI), serving Caracas, and at Santiago Mariño Caribbean International Airport (PMV / SVMG) on Margarita Island. For other airports in the country, contact us.' },
+      { q: 'Which airports in Venezuela do you operate at?', a: 'We operate at Simón Bolívar International Airport in Maiquetía (CCS / SVMI), serving Caracas. For other airports in the country, contact us.' },
       { q: 'What permits does a private flight need to land in Venezuela?', a: 'Non-scheduled operations require a landing or overflight permit from INAC, plus immigration clearance with SAIME and customs clearance with SENIAT. We prepare the documents and handle these procedures for you.' },
       { q: 'How far in advance should I request service?', a: 'Lead times depend on the type of operation and on each authority. Contact us as soon as you have a planned date and we will confirm the requirements, documents and timing for your case.' },
       { q: 'What should I do if my aircraft is grounded (AOG)?', a: 'Call our 24/7 operations line. We assess the fault with the crew, mobilize technicians and parts, handle import permits and keep you informed until the aircraft returns to service.' },
@@ -218,7 +216,7 @@ export const en: Dict = {
     tagline: 'Aircraft management, FBO, AOG support and permits for private aviation in Venezuela.',
     cols: { services: 'Services', operations: 'Operations', company: 'Company' },
     services: ['Aircraft management', 'FBO', 'AOG 24/7', 'Permits'],
-    operations: ['Caracas / CCS', 'Margarita / PMV', '24/7 Contact'],
+    operations: ['Caracas / CCS', '24/7 Contact'],
     rights: 'All rights reserved.',
     top: 'Back to top',
   },

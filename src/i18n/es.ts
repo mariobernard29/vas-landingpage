@@ -1,8 +1,8 @@
 export const es = {
   meta: {
-    title: 'Handling, FBO y AOG 24/7 en Venezuela (CCS · PMV) | Vanguard Aero Services',
+    title: 'Handling, FBO y AOG 24/7 en Venezuela (CCS · Maiquetía) | Vanguard Aero Services',
     description:
-      'Handling ejecutivo, FBO, gestión de aeronaves, AOG 24/7 y permisos INAC para aviación privada en Maiquetía (CCS) e Isla de Margarita (PMV), Venezuela.',
+      'Handling ejecutivo, FBO, gestión de aeronaves, AOG 24/7 y permisos INAC para aviación privada en Caracas (CCS · Maiquetía), Venezuela.',
     ogAlt: 'Jet ejecutivo en plataforma: handling y FBO para aviación privada en Venezuela',
   },
   nav: {
@@ -31,7 +31,7 @@ export const es = {
     text: 'Coordinamos cada detalle de su operación en Venezuela, desde tierra hasta el despegue.',
     cta1: 'Solicitar servicio',
     cta2: 'Operaciones 24/7',
-    meta: ['CCS · PMV', '24/7 Operations', 'Private Aviation'],
+    meta: ['CCS · Caracas', '24/7 Operations', 'Private Aviation'],
     alt: 'Jet ejecutivo estacionado en plataforma al atardecer',
   },
   request: {
@@ -44,7 +44,6 @@ export const es = {
   },
   airports: [
     { v: 'CCS', l: 'CCS · Caracas, Maiquetía' },
-    { v: 'PMV', l: 'PMV · Isla de Margarita' },
     { v: 'OTRO', l: 'Otro aeropuerto' },
   ],
   serviceTypes: [
@@ -123,7 +122,7 @@ export const es = {
       { auth: 'INAC', name: 'Instituto Nacional de Aeronáutica Civil', d: 'Permisos de aterrizaje, sobrevuelo y operaciones no regulares.' },
       { auth: 'SAIME', name: 'Servicio Administrativo de Identificación, Migración y Extranjería', d: 'Coordinación del despacho migratorio de pasajeros y tripulación.' },
       { auth: 'SENIAT', name: 'Servicio Nacional Integrado de Administración Aduanera y Tributaria', d: 'Coordinación de trámites aduaneros para aeronave, equipaje y carga.' },
-      { auth: 'CCS · PMV', name: 'Operadores aeroportuarios', d: 'Estacionamiento, slots y coordinación con el aeropuerto y sus servicios.' },
+      { auth: 'CCS · SVMI', name: 'Operadores aeroportuarios', d: 'Estacionamiento, slots y coordinación con el aeropuerto y sus servicios.' },
     ],
     note: 'Vanguard Aero Services gestiona trámites en nombre de sus clientes. Los requisitos y plazos varían según el tipo de operación: contáctenos con antelación para confirmarlos.',
     alt: 'Formulario de plan de vuelo internacional y modelo de aeronave sobre una mesa',
@@ -131,12 +130,11 @@ export const es = {
   },
   destinations: {
     eyebrow: 'Destinos',
-    title: 'Caracas e Isla de Margarita',
-    text: 'Operamos en los dos principales destinos de la aviación ejecutiva en Venezuela.',
+    title: 'Caracas',
+    text: 'Operamos en el Aeropuerto Internacional Simón Bolívar de Maiquetía, principal puerta de entrada de la aviación ejecutiva a Venezuela.',
     cta: 'Ver servicios',
     list: [
       { city: 'Caracas', code: 'CCS · Maiquetía', icao: 'SVMI', airport: 'Aeropuerto Internacional Simón Bolívar', desc: 'Puerta de entrada a la capital y principal centro de negocios del país.', img: 'caracas', alt: 'Caracas al atardecer con el cerro El Ávila al fondo' },
-      { city: 'Isla de Margarita', code: 'PMV · Santiago Mariño', icao: 'SVMG', airport: 'Aeropuerto Internacional del Caribe Santiago Mariño', desc: 'Principal destino turístico del Caribe venezolano.', img: 'margarita', alt: 'Playa con palmeras en la Isla de Margarita' },
     ],
     table: {
       caption: 'Información de operación',
@@ -149,7 +147,7 @@ export const es = {
     eyebrow: 'Nosotros',
     title: 'Servicios para la aviación ejecutiva en Venezuela',
     paragraphs: [
-      'Vanguard Aero Services coordina la operación en tierra de aeronaves privadas y corporativas en Caracas y la Isla de Margarita.',
+      'Vanguard Aero Services coordina la operación en tierra de aeronaves privadas y corporativas en Caracas (Maiquetía).',
       'Trabajamos para propietarios, operadores y tripulaciones que necesitan un interlocutor local confiable: un equipo que conoce los aeropuertos, las autoridades y los proveedores, y que responde a cualquier hora.',
     ],
     principles: [
@@ -173,7 +171,7 @@ export const es = {
       { k: 'ops', l: 'Centro de operaciones', v: 'Disponible 24/7' },
       { k: 'email', l: 'Correo' },
       { k: 'phone', l: 'Teléfono' },
-      { k: 'loc', l: 'Ubicación', v: 'Caracas (CCS) e Isla de Margarita (PMV), Venezuela' },
+      { k: 'loc', l: 'Ubicación', v: 'Caracas (CCS · Maiquetía), Venezuela' },
       { k: 'lang', l: 'Idiomas', v: 'Español · English' },
       { k: 'tz', l: 'Zona horaria', v: 'Hora de Venezuela (VET, UTC−4)' },
       { k: 'ig', l: 'Instagram' },
@@ -203,7 +201,7 @@ export const es = {
     eyebrow: 'Preguntas frecuentes',
     title: 'Lo que suelen preguntarnos antes de volar a Venezuela',
     items: [
-      { q: '¿En qué aeropuertos de Venezuela operan?', a: 'Operamos en el Aeropuerto Internacional Simón Bolívar de Maiquetía (CCS / SVMI), que sirve a Caracas, y en el Aeropuerto Internacional del Caribe Santiago Mariño (PMV / SVMG), en la Isla de Margarita. Para otros aeropuertos del país, consúltenos.' },
+      { q: '¿En qué aeropuertos de Venezuela operan?', a: 'Operamos en el Aeropuerto Internacional Simón Bolívar de Maiquetía (CCS / SVMI), que sirve a Caracas. Para otros aeropuertos del país, consúltenos.' },
       { q: '¿Qué permisos necesita un vuelo privado para aterrizar en Venezuela?', a: 'Las operaciones no regulares requieren permiso de aterrizaje o sobrevuelo del INAC, además del despacho migratorio ante el SAIME y aduanero ante el SENIAT. Preparamos la documentación y coordinamos estos trámites por usted.' },
       { q: '¿Con cuánta antelación debo solicitar el servicio?', a: 'Los plazos dependen del tipo de operación y de cada autoridad. Le recomendamos contactarnos en cuanto tenga la fecha prevista: le confirmamos requisitos, documentos y tiempos para su caso.' },
       { q: '¿Qué hago si mi aeronave queda en tierra (AOG)?', a: 'Llame a nuestra línea de operaciones 24/7. Evaluamos la falla con la tripulación, movilizamos técnicos y repuestos, gestionamos los permisos de importación y le mantenemos informado hasta el retorno al servicio.' },
@@ -216,7 +214,7 @@ export const es = {
     tagline: 'Gestión de aeronaves, FBO, soporte AOG y permisos para la aviación privada en Venezuela.',
     cols: { services: 'Servicios', operations: 'Operaciones', company: 'Compañía' },
     services: ['Gestión de aeronaves', 'FBO', 'AOG 24/7', 'Permisos'],
-    operations: ['Caracas / CCS', 'Margarita / PMV', 'Contacto 24/7'],
+    operations: ['Caracas / CCS', 'Contacto 24/7'],
     rights: 'Todos los derechos reservados.',
     top: 'Volver arriba',
   },

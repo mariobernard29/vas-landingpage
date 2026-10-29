@@ -130,7 +130,7 @@ const mgmtService = d.serviceTypes[0];
           <Img name={it.img} alt={it.alt} sizes="(min-width:1024px) max(85vw, 1900px), 120vw" class="absolute inset-0 h-full w-full object-cover" data-k={i} />
         ))}
         <div class="absolute bottom-0 left-0 max-w-[440px] bg-white px-5 pt-4 pb-4 pr-8 sm:px-6 lg:px-8 lg:pt-5 lg:pb-6" aria-live="polite">
-          <p id="cap-n" class="text-[12px] text-steel tabular-nums">CCS · PMV</p>
+          <p id="cap-n" class="text-[12px] text-steel tabular-nums">CCS · SVMI</p>
           <p id="cap-t" class="mt-1 text-[16px] font-medium">{d.partner.defaultCaption}</p>
           <p id="cap-d" class="mt-2 hidden text-[14px] leading-[1.5] text-steel lg:block"></p>
         </div>
@@ -241,8 +241,8 @@ const mgmtService = d.serviceTypes[0];
 
         <div class="mt-12 grid gap-6 sm:gap-10 lg:mt-16 lg:grid-cols-12">
           {d.destinations.list.map((x, i) => (
-            <article class:list={['dest group', i === 0 ? 'lg:col-span-7' : 'lg:col-span-5 lg:mt-32']}>
-              <div class:list={['zoom on-dark relative aspect-[4/5] bg-ink-2 text-white', i === 0 ? 'sm:aspect-[4/3]' : 'sm:aspect-[4/3] lg:aspect-[4/5]']}>
+            <article class:list={['dest group', d.destinations.list.length === 1 ? 'lg:col-span-12' : i === 0 ? 'lg:col-span-7' : 'lg:col-span-5 lg:mt-32']}>
+              <div class:list={['zoom on-dark relative aspect-[4/5] bg-ink-2 text-white', d.destinations.list.length === 1 ? 'sm:aspect-[4/3] lg:aspect-[21/9]' : i === 0 ? 'sm:aspect-[4/3]' : 'sm:aspect-[4/3] lg:aspect-[4/5]']}>
                 <Img name={x.img} alt={x.alt} sizes="(min-width:1024px) 70vw, 200vw" class="h-full w-full object-cover" />
                 <div class="absolute inset-0 bg-black/15"></div>
                 <div class="absolute inset-x-0 bottom-0 h-3/5 bg-gradient-to-t from-black/70 to-transparent"></div>

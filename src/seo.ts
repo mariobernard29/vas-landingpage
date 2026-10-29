@@ -34,7 +34,6 @@ export const homeJsonLd = (lang: Lang) => {
         geo: { '@type': 'GeoCoordinates', latitude: 10.6012, longitude: -66.9913 },
         areaServed: [
           { '@type': 'Airport', name: 'Aeropuerto Internacional Simón Bolívar', iataCode: 'CCS', icaoCode: 'SVMI' },
-          { '@type': 'Airport', name: 'Aeropuerto Internacional del Caribe Santiago Mariño', iataCode: 'PMV', icaoCode: 'SVMG' },
           { '@type': 'Country', name: 'Venezuela' },
         ],
         openingHoursSpecification: {
